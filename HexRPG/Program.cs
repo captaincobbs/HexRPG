@@ -7,7 +7,7 @@ namespace HexRPG
         private static MainGame program;
 
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             using (program = new MainGame())
             {

@@ -7,7 +7,7 @@ using static HexRPG.Utilities.FileUtilities;
 
 namespace HexRPG.World
 {
-    public class HexMap
+    public class Map
     {
 
     }

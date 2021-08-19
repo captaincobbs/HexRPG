@@ -50,8 +50,8 @@ namespace HexRPG.Dynamic
             this.windowWidth = window.ClientBounds.Width;
             if(cameraFocus == CameraFocus.Player)
             {
-                camXDest = (int)((player.x * GameOptions.TileSize) - (GameOptions.TileSize / 2));
-                camYDest = (int)((player.y * GameOptions.TileSize) - (GameOptions.TileSize / 2));
+                camXDest = (int)((player.Coordinate.X * GameOptions.TileSize) - (GameOptions.TileSize / 2));
+                camYDest = (int)((player.Coordinate.Y * GameOptions.TileSize) - (GameOptions.TileSize / 2));
                 camX += (int)((camXDest - camX) * GameOptions.InertiaFactor);
                 camY += (int)((camYDest - camY) * GameOptions.InertiaFactor);
 

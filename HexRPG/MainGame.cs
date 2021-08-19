@@ -1,6 +1,7 @@
 ﻿using HexRPG.Dynamic;
 using HexRPG.Entity;
 using HexRPG.Generation;
+using HexRPG.Managers;
 using HexRPG.Sprite;
 using HexRPG.Utilities;
 using HexRPG.World;
@@ -16,7 +17,7 @@ namespace HexRPG
         /// <summary>
         /// Viewport for the user
         /// </summary>
-        public ViewPort viewPort { get; private set; }
+        public ViewPort ViewPort { get; private set; }
 
         /// <summary>
         /// Determines the format in which user files will be exported as
@@ -28,7 +29,7 @@ namespace HexRPG
         // Main variables
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        WorldViewer mapViewer;
+        MapManager mapViewer;
 
 
         /// <summary>
@@ -41,10 +42,11 @@ namespace HexRPG
             Content.RootDirectory = "Content";
             SaveType = SaveType.JSON;
             player = new Player("");
-            viewPort = new ViewPort(Window.ClientBounds.Height, Window.ClientBounds.Width, CameraFocus.Player,player);
+            ViewPort = new ViewPort(Window.ClientBounds.Height, Window.ClientBounds.Width, CameraFocus.Player,player);
 
             // Window properties
             IsMouseVisible = true;
+            graphics.HardwareModeSwitch = false;
             graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
             graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
             Window.AllowUserResizing = true;
@@ -65,7 +67,7 @@ namespace HexRPG
         protected override void Update(GameTime gameTime)
         {
             player.Update();
-            viewPort.Update(Window);
+            ViewPort.Update(Window);
             // Camera scrolling each frame - subtracting (GameOptions.TileSize/2) centers the screen
 
 
@@ -77,9 +79,9 @@ namespace HexRPG
 
         protected override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, viewPort.Camera);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, ViewPort.Camera);
             player.Draw(spriteBatch);
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(GameOptions.BackgroundColor);
             base.Draw(gameTime);
             spriteBatch.End();
         }

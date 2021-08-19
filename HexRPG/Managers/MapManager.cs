@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HexRPG.World
+namespace HexRPG.Managers
 {
-    public class WorldViewer
+    public class MapManager
     {
 
     }

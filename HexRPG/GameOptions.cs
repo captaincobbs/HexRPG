@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HexRPG.Entity;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,5 +37,7 @@ namespace HexRPG
         /// Scrolls required to do scroll actions
         /// </summary>
         public static float ScrollSensitivity = 5f;
+
+        public static float AnalogSensitivity = 0.5f;
     }
 }

@@ -28,14 +28,24 @@ namespace HexRPG.Entity
         /// </summary>
         public static Rectangle DiagonalImage { get; set; }
 
+        /// <summary>
+        /// Z-Index of Entity
+        /// </summary>
         public float Depth { get; set; }
 
         /// <summary>
-        /// Coordinate of the player, update to move the player
+        /// Effective location of the player character on the world, represented in X & Y on the hexagon grid.
         /// </summary>
+        public Vector2 Coordinate { get; set; }
 
+        /// <summary>
+        /// Coordinate of the graphical representation of the player, NOT the player's effective coordinates
+        /// </summary>
         private Vector2 AnimCoordinate { get; set; }
 
+        /// <summary>
+        /// Direction player sprite is facing
+        /// </summary>
         public float Rotation { get; set; }
         private int frameCounter = 0;
         private int frameLimit = 8;
@@ -61,18 +71,17 @@ namespace HexRPG.Entity
         /// <inheritdoc/>
         public bool IsEntity { get; } = true;
 
-        public int x { get; set; } = 0;
-        public int y { get; set; } = 0;
-
         /// <summary>
         /// Constructor for a player instance
         /// </summary>
         /// <param name="Name">The players chosen name</param>
         public Player(string Name)
         {
+            Coordinate = new Vector2(0, 0);
             AnimCoordinate = new Vector2(GameOptions.MapSize / 2, GameOptions.MapSize / 2);
             this.Name = Name;
             Depth = 1f;
+            Image = SpriteAtlas.Player_Down;
         }
 
         /// <summary>
@@ -88,8 +97,8 @@ namespace HexRPG.Entity
 
             // Update the animation coordinate to make character slide
             AnimCoordinate = new Vector2(
-            (x - AnimCoordinate.X) * GameOptions.MovementInertiaFactor + AnimCoordinate.X,
-            (y - AnimCoordinate.Y) * GameOptions.MovementInertiaFactor + AnimCoordinate.Y
+            (Coordinate.X - AnimCoordinate.X) * GameOptions.MovementInertiaFactor + AnimCoordinate.X,
+            (Coordinate.Y - AnimCoordinate.Y) * GameOptions.MovementInertiaFactor + AnimCoordinate.Y
             );
 
             // Frame Counting
@@ -106,11 +115,11 @@ namespace HexRPG.Entity
         private void HandleMovement()
         {
             // Keyboard input
-            if (InputManager.KeyboardState.IsKeyDown(Keys.Right) && !InputManager.KeyboardState.IsKeyDown(Keys.Left))
+            if (InputManager.KeyboardState.IsKeyDown() && !InputManager.KeyboardState.IsKeyDown(Keys.Left))
             {
                 if (InputManager.LastKeyboardState.IsKeyUp(Keys.Right))
                 {
-                    x += 1;
+                    Coordinate = new Vector2(Coordinate.X + 1, Coordinate.Y);
                     frameCounter = 0;
                 }
 
@@ -121,7 +130,7 @@ namespace HexRPG.Entity
             {
                 if (InputManager.LastKeyboardState.IsKeyUp(Keys.Left))
                 {
-                    x -= 1;
+                    Coordinate = new Vector2(Coordinate.X - 1, Coordinate.Y);
                     frameCounter = 0;
                 }
 
@@ -132,7 +141,7 @@ namespace HexRPG.Entity
             {
                 if (InputManager.LastKeyboardState.IsKeyUp(Keys.Up))
                 {
-                    y += 1; 
+                    Coordinate = new Vector2(Coordinate.X, Coordinate.Y + 1); 
                     frameCounter = 0;
                 }
 
@@ -143,7 +152,7 @@ namespace HexRPG.Entity
             {
                 if (InputManager.LastKeyboardState.IsKeyUp(Keys.Down))
                 {
-                    y -= 1;
+                    Coordinate = new Vector2(Coordinate.X, Coordinate.Y - 1);
                     frameCounter = 0;
                 }
 
