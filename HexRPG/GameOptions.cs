@@ -1,4 +1,4 @@
-﻿using HexRPG.Entity;
+﻿//using HexRPG.Entity;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace HexRPG
     public static class GameOptions
     {
         /// <summary>
-        /// Pixel size of each world grid tile
+        /// Pixel size of a tile on the map, tiles wider or taller than this will be placed as normal.
         /// </summary>
         public const int TileSize = 32;
 
@@ -24,20 +24,23 @@ namespace HexRPG
         public static float MovementInertiaFactor = 0.12f;
 
         /// <summary>
-        /// Size of a one dimension of the map in chunks
+        /// Length of a chunk in tiles
         /// </summary>
-        public static int MapSize = 20;
+        public static int ChunkSize = 20;
 
         /// <summary>
-        /// Color of the window background
+        /// Color of the game background when no content blocks it
         /// </summary>
         public static Color BackgroundColor = Color.Black;
 
         /// <summary>
-        /// Scrolls required to do scroll actions
+        /// Determines the sensitivity of horizontal and vertical scrolling, smaller numbers means more sensitivity.
         /// </summary>
         public static float ScrollSensitivity = 5f;
 
+        /// <summary>
+        /// Threshold for gamepads on what is considered a button press
+        /// </summary>
         public static float AnalogSensitivity = 0.5f;
     }
 }
