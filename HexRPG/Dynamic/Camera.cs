@@ -13,21 +13,11 @@ namespace HexRPG.Dynamic
         public Matrix Camera {get; private set;}
         public CameraFocus cameraFocus { get; set; }
 
-        /// <summary>
-        /// Change in scroll wheel value since last update
-        /// </summary>
-        public static int CurrentScrollWheelValue { get; set; }
-
-        /// <summary>
-        /// Last recorded scroll wheel update
-        /// </summary>
-        public static int DeltaScrollWheelValue { get; set; }
-
         // Camera properties
-        float camZoom = 0.5f;
-        float camZoomDest = 0.5f;
-        float maxCamZoom = 4f;
-        float minCamZoom = 0.5f;
+        public float CamZoom = 2f;
+        public float CamZoomDest = 2f;
+        float maxCamZoom = 10f;
+        float minCamZoom = 1f;
         int camX = 0;
         int camY = 0;
         private int camXDest = 0;
@@ -56,28 +46,34 @@ namespace HexRPG.Dynamic
                 camY += (int)((camYDest - camY) * GameOptions.InertiaFactor);
 
                 // Scrolling
-                camZoom += ((camZoomDest - camZoom) * GameOptions.InertiaFactor);
-                DeltaScrollWheelValue = InputManager.MouseState.ScrollWheelValue - CurrentScrollWheelValue;
-                CurrentScrollWheelValue += DeltaScrollWheelValue;
-                if (DeltaScrollWheelValue != CurrentScrollWheelValue)
+                CamZoom += ((CamZoomDest - CamZoom) * GameOptions.InertiaFactor);
+
+                // Scroll In
+                if (InputManager.IsActionPressed(InputManager.InputAction.ZoomIn))
                 {
-                    camZoomDest += DeltaScrollWheelValue * (GameOptions.ScrollSensitivity / 1000f);
+                    CamZoomDest += InputManager.ScrollWheelDistance;
+                }
+
+                // Scroll Out
+                if (InputManager.IsActionPressed(InputManager.InputAction.ZoomOut))
+                {
+                    CamZoomDest += InputManager.ScrollWheelDistance;
                 }
 
                 // Reset camera zoom
-                if (InputManager.MouseState.MiddleButton == ButtonState.Pressed)
+                if (InputManager.IsActionPressed(InputManager.InputAction.ZoomReset))
                 {
-                    camZoomDest = 0.5f;
+                    CamZoomDest = 2f;
                 }
 
                 // Keep camera zoom within a specific range
-                camZoomDest = MathUtilities.ContainInRange(camZoomDest, minCamZoom, maxCamZoom);
-                camZoom = MathUtilities.ContainInRange(camZoom, minCamZoom, maxCamZoom);
+                CamZoomDest = MathUtilities.ContainInRange(CamZoomDest, minCamZoom, maxCamZoom);
+                CamZoom = MathUtilities.ContainInRange(CamZoom, minCamZoom, maxCamZoom);
 
                 // Change camera matrix properties with updated information
                 Camera =
                     Matrix.CreateTranslation(new Vector3(-camX, -camY, 0)) *
-                    Matrix.CreateScale(new Vector3(camZoom, camZoom, 1)) *
+                    Matrix.CreateScale(new Vector3(CamZoom, CamZoom, 1)) *
                     Matrix.CreateTranslation(new Vector3(windowWidth * 0.5f,
                     windowHeight * 0.5f, 0));
             }

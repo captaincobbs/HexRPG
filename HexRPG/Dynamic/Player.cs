@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
+using static HexRPG.Entity.InputManager;
 
 namespace HexRPG.Entity
 {
@@ -78,10 +80,11 @@ namespace HexRPG.Entity
         public Player(string Name)
         {
             Coordinate = new Vector2(0, 0);
-            AnimCoordinate = new Vector2(GameOptions.MapSize / 2, GameOptions.MapSize / 2);
+            AnimCoordinate = new Vector2(GameOptions.ChunkSize / 2, GameOptions.ChunkSize / 2);
             this.Name = Name;
             Depth = 1f;
             Image = SpriteAtlas.Player_Down;
+            Debug.WriteLine($"{Coordinate.X}, {Coordinate.Y}");
         }
 
         /// <summary>
@@ -115,44 +118,40 @@ namespace HexRPG.Entity
         private void HandleMovement()
         {
             // Keyboard input
-            if (InputManager.KeyboardState.IsKeyDown() && !InputManager.KeyboardState.IsKeyDown(Keys.Left))
+            if (IsActionPressed(InputAction.Right) && !IsActionPressed(InputAction.Left))
             {
-                if (InputManager.LastKeyboardState.IsKeyUp(Keys.Right))
+                if (IsActionTriggered(InputAction.Right))
                 {
-                    Coordinate = new Vector2(Coordinate.X + 1, Coordinate.Y);
                     frameCounter = 0;
                 }
 
                 HorizontalIndicatedDirection = HorizontalPlayerDirection.Right;
             }
 
-            if (InputManager.KeyboardState.IsKeyDown(Keys.Left) && !InputManager.KeyboardState.IsKeyDown(Keys.Right))
+            if (IsActionPressed(InputAction.Left) && !IsActionPressed(InputAction.Right))
             {
-                if (InputManager.LastKeyboardState.IsKeyUp(Keys.Left))
+                if (IsActionTriggered(InputAction.Left))
                 {
-                    Coordinate = new Vector2(Coordinate.X - 1, Coordinate.Y);
                     frameCounter = 0;
                 }
 
                 HorizontalIndicatedDirection = HorizontalPlayerDirection.Left;
             }
 
-            if (InputManager.KeyboardState.IsKeyDown(Keys.Up) && !InputManager.KeyboardState.IsKeyDown(Keys.Down))
+            if (IsActionPressed(InputAction.Up) && !IsActionPressed(InputAction.Down))
             {
-                if (InputManager.LastKeyboardState.IsKeyUp(Keys.Up))
+                if (IsActionTriggered(InputAction.Up))
                 {
-                    Coordinate = new Vector2(Coordinate.X, Coordinate.Y + 1); 
                     frameCounter = 0;
                 }
 
                 VerticalIndicatedDirection = VerticalPlayerDirection.Up;
             }
 
-            if (InputManager.KeyboardState.IsKeyDown(Keys.Down) && !InputManager.KeyboardState.IsKeyDown(Keys.Up))
+            if (IsActionPressed(InputAction.Down) && !IsActionPressed(InputAction.Up))
             {
-                if (InputManager.LastKeyboardState.IsKeyUp(Keys.Down))
+                if (IsActionTriggered(InputAction.Down))
                 {
-                    Coordinate = new Vector2(Coordinate.X, Coordinate.Y - 1);
                     frameCounter = 0;
                 }
 
@@ -181,46 +180,55 @@ namespace HexRPG.Entity
             if (xMove == 1 && yMove == 0)
             {
                 Image = SpriteAtlas.Player_Right;
+                Coordinate = new Vector2(Coordinate.X + 1, Coordinate.Y);
             }
             // Down Right
             else if (xMove == 1 && yMove == 1)
             {
                 Image = SpriteAtlas.Player_BottomRight;
+                Coordinate = new Vector2(Coordinate.X + 1, Coordinate.Y);
+                Coordinate = new Vector2(Coordinate.X, Coordinate.Y + 1);
+
             }
             // Down
             else if (xMove == 0 && yMove == 1)
             {
                 Image = SpriteAtlas.Player_Down;
+                Coordinate = new Vector2(Coordinate.X, Coordinate.Y + 1);
             }
             // Down Left
             if (xMove == -1 && yMove == 1)
             {
                 Image = SpriteAtlas.Player_BottomLeft;
+                Coordinate = new Vector2(Coordinate.X - 1, Coordinate.Y);
+                Coordinate = new Vector2(Coordinate.X, Coordinate.Y + 1);
             }
             // Left
             else if (xMove == -1 && yMove == 0)
             {
                 Image = SpriteAtlas.Player_Left;
+                Coordinate = new Vector2(Coordinate.X - 1, Coordinate.Y);
             }
             // Up Left
             else if (xMove == -1 && yMove == -1)
             {
                 Image = SpriteAtlas.Player_TopLeft;
+                Coordinate = new Vector2(Coordinate.X - 1, Coordinate.Y);
+                Coordinate = new Vector2(Coordinate.X, Coordinate.Y - 1);
             }
             // Up
             else if (xMove == 0 && yMove == -1)
             {
                 Image = SpriteAtlas.Player_Up;
+                Coordinate = new Vector2(Coordinate.X, Coordinate.Y - 1);
             }
             // Up Right
             else if (xMove == 1 && yMove == -1)
             {
                 Image = SpriteAtlas.Player_TopRight;
+                Coordinate = new Vector2(Coordinate.X + 1, Coordinate.Y);
+                Coordinate = new Vector2(Coordinate.X, Coordinate.Y - 1);
             }
-
-            // Player Sliding
-            
-            //Tile newTile = world.GetTile(ContainingTile.XPosition + xMove, ContainingTile.YPosition + yMove, false);
 
             // Reset movement direction
             VerticalIndicatedDirection = VerticalPlayerDirection.None;
