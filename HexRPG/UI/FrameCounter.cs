@@ -29,11 +29,11 @@ namespace HexRPG.UI
             if (_sampleBuffer.Count > MAXIMUM_SAMPLES)
             {
                 _sampleBuffer.Dequeue();
-                AverageFramesPerSecond = (float)Math.Floor(_sampleBuffer.Average(i => i));
+                AverageFramesPerSecond = (float)Math.Round(_sampleBuffer.Average(i => i));
             }
             else
             {
-                AverageFramesPerSecond = (float)Math.Floor(CurrentFramesPerSecond);
+                AverageFramesPerSecond = (float)Math.Round(CurrentFramesPerSecond);
             }
 
             TotalFrames++;
