@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HexRPG.Utilities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -271,8 +272,15 @@ namespace HexRPG.Entity
         /// </summary>
         private static MouseState previousMouseState { get; set; }
 
-        public static int ScrollHorizontalWheelDistance { get { return (int)Math.Round(CurrentDeltaHorizontalScrollWheelValue * (GameOptions.ScrollSensitivity / 1000f)); } }
-        public static int ScrollWheelDistance { get { return (int)Math.Round(CurrentDeltaScrollWheelValue * (GameOptions.ScrollSensitivity / 1000f)); } }
+        /// <summary>
+        /// Delta in scroll value of the horizontal scroll wheel multiplied by the scroll sensitivity
+        /// </summary>
+        private static int ScrollHorizontalWheelDistance { get { return (int)Math.Round(CurrentDeltaHorizontalScrollWheelValue * (GameOptions.ScrollSensitivity / 1000f)); } }
+
+        /// <summary>
+        /// Delta in scroll value of the vertical scroll wheel multiplied by the scroll sensitivity
+        /// </summary>
+        private static int ScrollWheelDistance { get { return (int)Math.Round(CurrentDeltaScrollWheelValue * (GameOptions.ScrollSensitivity / 1000f)); } }
 
         /// <summary>
         /// Change in horizontal scroll distance since most recent update
@@ -963,14 +971,30 @@ namespace HexRPG.Entity
             Mappings[(int)InputAction.ZoomOut].mouseActions.Add(MouseAction.ScrollOut);
         }
 
+
+        /// <summary>
+        ///  Returns whether any of mapped input are pressed
+        /// </summary>
+        /// <param name="action">Action to check mapped inputs for</param>
+        /// <returns>Whether the Action has any pressed mapped inputs</returns>
         public static bool IsActionPressed(InputAction action)
         {
             return IsActionMapPressed(Mappings[(int)action]);
         }
 
+        /// <summary>
+        ///  Returns whether any of mapped input are pressed
+        /// </summary>
+        /// <param name="action">Action to check mapped inputs for</param>
+        /// <returns>Whether the Action has any pressed mapped inputs</returns>
         public static bool IsActionTriggered(InputAction action)
         {
             return IsActionMapTriggered(Mappings[(int)action]);
+        }
+
+        public static float GetActionScroll(InputAction action)
+        {
+            return GetActionMapScroll(Mappings[(int)action]);
         }
 
         public static InputType LastUsedInput { get; set; } = InputType.Mouse;
@@ -1040,6 +1064,44 @@ namespace HexRPG.Entity
             }
 
             return false;
+        }
+
+        private static float GetActionMapScroll(ActionMapping mapping)
+        {
+            for (int i = 0; i < mapping.keyboardKeys.Count; i++)
+            {
+                if (IsKeyPressed(mapping.keyboardKeys[i]))
+                {
+                    LastUsedInput = InputType.Keyboard;
+                    return GameOptions.KeyScrollSensitivity * GameOptions.ScrollSensitivity;
+                }
+            }
+
+            for (int i = 0; i < mapping.gamePadButtons.Count; i++)
+            {
+                if (IsGamePadButtonPressed(mapping.gamePadButtons[i]))
+                {
+                    LastUsedInput = InputType.GamePad;
+                    return GameOptions.AnalogSensitivity * GameOptions.ScrollSensitivity;
+                }
+            }
+
+            for (int i = 0; i < mapping.mouseActions.Count; i++)
+            {
+                if (IsClickPressed(mapping.mouseActions[i]))
+                {
+                    LastUsedInput = InputType.Mouse;
+                    switch (mapping.mouseActions[i])
+                    {
+                        case (MouseAction.ScrollIn):
+                            return MathUtilities.ContainInRange(ScrollWheelDistance, 0, float.MaxValue) * GameOptions.ScrollSensitivity;
+                        case (MouseAction.ScrollOut):
+                            return MathUtilities.ContainInRange(ScrollWheelDistance, float.MinValue, 0) * GameOptions.ScrollSensitivity;
+                    }
+                }
+            }
+
+            return 0f;
         }
         #endregion Mapping
 

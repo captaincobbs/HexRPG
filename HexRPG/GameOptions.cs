@@ -42,5 +42,10 @@ namespace HexRPG
         /// Threshold for gamepads on what is considered a button press
         /// </summary>
         public static float AnalogSensitivity = 0.5f;
+
+        /// <summary>
+        /// Determines speed of horizontal and vertical scrolling for keys assigned to scrolling mappings
+        /// </summary>
+        public static float KeyScrollSensitivity = 0.2f;
     }
 }
