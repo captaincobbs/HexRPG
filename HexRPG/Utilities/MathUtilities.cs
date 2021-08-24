@@ -50,5 +50,15 @@ namespace HexRPG.Utilities
         {
             return value < min ? min : value > max ? max : value;
         }
+
+        public static float ContainAboveMin(float value, float min)
+        {
+            return value < min ? min : value;
+        }
+
+        public static float ContainBelowMax(float value, float max)
+        {
+            return value > max ? max : value;
+        }
     }
 }
