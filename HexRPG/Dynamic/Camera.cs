@@ -57,7 +57,7 @@ namespace HexRPG.Dynamic
                 // Scroll Out
                 if (InputManager.IsActionPressed(InputManager.InputAction.ZoomOut))
                 {
-                    CamZoomDest += InputManager.GetActionScroll(InputManager.InputAction.ZoomOut);
+                    CamZoomDest -= InputManager.GetActionScroll(InputManager.InputAction.ZoomOut);
                 }
 
                 // Reset camera zoom
