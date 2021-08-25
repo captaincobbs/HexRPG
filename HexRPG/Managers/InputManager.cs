@@ -33,10 +33,14 @@ namespace HexRPG.Entity
             B,
             X,
             Y,
-            Up,
-            Down,
-            Left,
-            Right,
+            LeftStickUp,
+            LeftStickDown,
+            LeftStickLeft,
+            LeftStickRight,
+            RightStickUp,
+            RightStickDown,
+            RightStickLeft,
+            RightStickRight,
             LeftShoulder,
             RightShoulder,
             LeftTrigger,
@@ -394,10 +398,10 @@ namespace HexRPG.Entity
                     return (CurrentMouseState.RightButton == ButtonState.Pressed) && !(previousMouseState.RightButton == ButtonState.Pressed);
 
                 case MouseAction.ScrollIn:
-                    return (CurrentDeltaScrollWheelValue < 0) && (CurrentDeltaScrollWheelValue != PreviousDeltaScrollWheelValue);
+                    return (CurrentDeltaScrollWheelValue > 0) && (CurrentDeltaScrollWheelValue != PreviousDeltaScrollWheelValue);
 
                 case MouseAction.ScrollOut:
-                    return (CurrentDeltaScrollWheelValue > 0) && (CurrentDeltaScrollWheelValue != PreviousDeltaScrollWheelValue);
+                    return (CurrentDeltaScrollWheelValue < 0) && (CurrentDeltaScrollWheelValue != PreviousDeltaScrollWheelValue);
 
                 case MouseAction.HorizontalScrollLeft:
                     return (CurrentDeltaHorizontalScrollWheelValue < 0) && (CurrentDeltaScrollWheelValue != PreviousDeltaScrollWheelValue);
@@ -473,7 +477,7 @@ namespace HexRPG.Entity
         /// <returns>Whether B on the GamePad is held down</returns>
         public static bool IsGamePadBPressed()
         {
-            return (CurrentGamepadState.Buttons.A == ButtonState.Pressed);
+            return (CurrentGamepadState.Buttons.B == ButtonState.Pressed);
         }
 
         /// <summary>
@@ -764,17 +768,29 @@ namespace HexRPG.Entity
                 case GamePadButton.RightStick:
                     return IsGamePadRightStickPressed();
 
-                case GamePadButton.Up:
+                case GamePadButton.LeftStickUp:
                     return IsGamePadLeftStickUpPressed();
 
-                case GamePadButton.Down:
+                case GamePadButton.LeftStickDown:
                     return IsGamePadLeftStickDownPressed();
 
-                case GamePadButton.Left:
+                case GamePadButton.LeftStickLeft:
                     return IsGamePadLeftStickLeftPressed();
 
-                case GamePadButton.Right:
+                case GamePadButton.LeftStickRight:
                     return IsGamePadLeftStickRightPressed();
+
+                case GamePadButton.RightStickUp:
+                    return IsGamepadRightStickUpPressed();
+
+                case GamePadButton.RightStickDown:
+                    return IsGamepadRightStickDownPressed();
+
+                case GamePadButton.RightStickLeft:
+                    return IsGamepadRightStickLeftPressed();
+
+                case GamePadButton.RightStickRight:
+                    return IsGamepadRightStickRightPressed();
 
                 case GamePadButton.DPadUp:
                     return IsGamePadDPadUpPressed();
@@ -831,17 +847,29 @@ namespace HexRPG.Entity
                 case GamePadButton.RightStick:
                     return IsGamePadRightStickTriggered();
 
-                case GamePadButton.Up:
+                case GamePadButton.LeftStickUp:
                     return IsGamePadLeftStickUpTriggered();
 
-                case GamePadButton.Down:
+                case GamePadButton.LeftStickDown:
                     return IsGamePadLeftStickDownTriggered();
 
-                case GamePadButton.Left:
+                case GamePadButton.LeftStickLeft:
                     return IsGamePadLeftStickLeftTriggered();
 
-                case GamePadButton.Right:
+                case GamePadButton.LeftStickRight:
                     return IsGamePadLeftStickRightTriggered();
+
+                case GamePadButton.RightStickUp:
+                    return IsGamepadRightStickUpTriggered();
+
+                case GamePadButton.RightStickDown:
+                    return IsGamepadRightStickDownTriggered();
+
+                case GamePadButton.RightStickLeft:
+                    return IsGamepadRightStickLeftTriggered();
+
+                case GamePadButton.RightStickRight:
+                    return IsGamepadRightStickRightTriggered();
 
                 case GamePadButton.DPadUp:
                     return IsGamePadDPadUpTriggered();
@@ -886,7 +914,7 @@ namespace HexRPG.Entity
             // Down
             Mappings[(int)InputAction.Down] = new ActionMapping();
             Mappings[(int)InputAction.Down].keyboardKeys.Add(Keys.S);
-            Mappings[(int)InputAction.Down].gamePadButtons.Add(GamePadButton.Down);
+            Mappings[(int)InputAction.Down].gamePadButtons.Add(GamePadButton.LeftStickDown);
 
             // DownLeft
             Mappings[(int)InputAction.DownLeft] = new ActionMapping();
@@ -922,7 +950,7 @@ namespace HexRPG.Entity
             // Left
             Mappings[(int)InputAction.Left] = new ActionMapping();
             Mappings[(int)InputAction.Left].keyboardKeys.Add(Keys.A);
-            Mappings[(int)InputAction.Left].gamePadButtons.Add(GamePadButton.Left);
+            Mappings[(int)InputAction.Left].gamePadButtons.Add(GamePadButton.LeftStickLeft);
 
             // Menu
             Mappings[(int)InputAction.Menu] = new ActionMapping();
@@ -937,7 +965,7 @@ namespace HexRPG.Entity
             // Right
             Mappings[(int)InputAction.Right] = new ActionMapping();
             Mappings[(int)InputAction.Right].keyboardKeys.Add(Keys.D);
-            Mappings[(int)InputAction.Right].gamePadButtons.Add(GamePadButton.Right);
+            Mappings[(int)InputAction.Right].gamePadButtons.Add(GamePadButton.LeftStickRight);
 
             // Status
             Mappings[(int)InputAction.Status] = new ActionMapping();
@@ -947,7 +975,7 @@ namespace HexRPG.Entity
             // Up
             Mappings[(int)InputAction.Up] = new ActionMapping();
             Mappings[(int)InputAction.Up].keyboardKeys.Add(Keys.W);
-            Mappings[(int)InputAction.Up].gamePadButtons.Add(GamePadButton.Up);
+            Mappings[(int)InputAction.Up].gamePadButtons.Add(GamePadButton.LeftStickUp);
 
             // UpLeft
             Mappings[(int)InputAction.UpLeft] = new ActionMapping();
@@ -959,6 +987,8 @@ namespace HexRPG.Entity
 
             // ZoomIn
             Mappings[(int)InputAction.ZoomIn] = new ActionMapping();
+            Mappings[(int)InputAction.ZoomIn].gamePadButtons.Add(GamePadButton.RightStickUp);
+            Mappings[(int)InputAction.ZoomIn].gamePadButtons.Add(GamePadButton.A);
             Mappings[(int)InputAction.ZoomIn].mouseActions.Add(MouseAction.ScrollIn);
 
             // ZoomReset
@@ -968,6 +998,8 @@ namespace HexRPG.Entity
 
             // ZoomOut
             Mappings[(int)InputAction.ZoomOut] = new ActionMapping();
+            Mappings[(int)InputAction.ZoomOut].gamePadButtons.Add(GamePadButton.RightStickDown);
+            Mappings[(int)InputAction.ZoomOut].gamePadButtons.Add(GamePadButton.B);
             Mappings[(int)InputAction.ZoomOut].mouseActions.Add(MouseAction.ScrollOut);
         }
 
@@ -1073,7 +1105,7 @@ namespace HexRPG.Entity
                 if (IsKeyPressed(mapping.keyboardKeys[i]))
                 {
                     LastUsedInput = InputType.Keyboard;
-                    return GameOptions.KeyScrollSensitivity * GameOptions.ScrollSensitivity;
+                    return GameOptions.ScrollSensitivity / GameOptions.InputSensitivity;
                 }
             }
 
@@ -1082,7 +1114,7 @@ namespace HexRPG.Entity
                 if (IsGamePadButtonPressed(mapping.gamePadButtons[i]))
                 {
                     LastUsedInput = InputType.GamePad;
-                    return GameOptions.AnalogSensitivity * GameOptions.ScrollSensitivity;
+                    return GameOptions.ScrollSensitivity / GameOptions.ScrollSensitivity / 2;
                 }
             }
 
@@ -1094,9 +1126,19 @@ namespace HexRPG.Entity
                     switch (mapping.mouseActions[i])
                     {
                         case (MouseAction.ScrollIn):
-                            return MathUtilities.ContainInRange(ScrollWheelDistance, 0, float.MaxValue) * GameOptions.ScrollSensitivity;
+                            return MathUtilities.ContainInRange(ScrollWheelDistance, -1, 0);
                         case (MouseAction.ScrollOut):
-                            return MathUtilities.ContainInRange(ScrollWheelDistance, float.MinValue, 0) * GameOptions.ScrollSensitivity;
+                            return -1 * MathUtilities.ContainInRange(ScrollWheelDistance, 0, 1);
+                        case (MouseAction.HorizontalScrollLeft):
+                            return MathUtilities.ContainInRange(ScrollHorizontalWheelDistance, 0, 1);
+                        case (MouseAction.HorizontalScrollRight):
+                            return MathUtilities.ContainInRange(ScrollHorizontalWheelDistance, 1, 0);
+                        case (MouseAction.LeftClick):
+                            return GameOptions.ScrollSensitivity / 15f;
+                        case (MouseAction.RightClick):
+                            return GameOptions.ScrollSensitivity / 15f;
+                        case (MouseAction.MiddleClick):
+                            return GameOptions.ScrollSensitivity / 15f;
                     }
                 }
             }
