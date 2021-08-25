@@ -9,15 +9,13 @@ namespace HexRPG.Utilities
     {
         public enum HorizontalAlignment
         {
-            Manual,
-            Right,
             Left,
+            Right,
             Center
         }
 
         public enum VerticalAlignment
         {
-            Manual,
             Top,
             Bottom,
             Center
@@ -28,19 +26,9 @@ namespace HexRPG.Utilities
             return renderArea.Width - (int)size.X;
         }
 
-        public static int HorizontalAlignLeft(Rectangle renderArea, Vector2 size)
-        {
-            return 0;
-        }
-
         public static int HorizontalAlignCenter(Rectangle renderArea, Vector2 size)
         {
             return (renderArea.Width - (int)size.X) / 2;
-        }
-
-        public static int VerticalAlignTop(Rectangle renderArea, Vector2 size)
-        {
-            return 0;
         }
 
         public static int VerticalAlignBottom(Rectangle renderArea, Vector2 size)
