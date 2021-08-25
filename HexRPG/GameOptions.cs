@@ -34,7 +34,7 @@ namespace HexRPG
         public static Color BackgroundColor = Color.Black;
 
         /// <summary>
-        /// Determines the sensitivity of horizontal and vertical scrolling, smaller numbers means more sensitivity.
+        /// Determines the sensitivity of horizontal and vertical scrolling mappings, smaller numbers means more sensitivity.
         /// </summary>
         public static float ScrollSensitivity = 5f;
 
@@ -44,8 +44,8 @@ namespace HexRPG
         public static float AnalogSensitivity = 0.5f;
 
         /// <summary>
-        /// Determines speed of horizontal and vertical scrolling for keys assigned to scrolling mappings
+        /// Determines speed of horizontal and vertical scrolling for non-scroll inputs assigned to scrolling mappings, lower speed equals higher sensitivity.
         /// </summary>
-        public static float KeyScrollSensitivity = 0.2f;
+        public static float InputSensitivity = 15f;
     }
 }
