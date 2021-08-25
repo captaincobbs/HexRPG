@@ -50,7 +50,7 @@ namespace HexRPG.Entity
         /// </summary>
         public float Rotation { get; set; }
         private int frameCounter = 0;
-        private int frameLimit = 8;
+        private int frameLimit = 5;
 
         // Player Direction
         /// <summary>
