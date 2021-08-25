@@ -12,7 +12,7 @@ namespace HexRPG.Fonts
         public static SpriteFont Battlenet(GraphicsDevice graphicsDevice)
         {
             TtfFontBakerResult battlenet = (TtfFontBaker.Bake(File.ReadAllBytes("./Content/Fonts/Battlenet.ttf"),
-                24,
+                14,
                 1024,
                 1024,
                 new[]
