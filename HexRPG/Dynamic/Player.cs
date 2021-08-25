@@ -84,7 +84,6 @@ namespace HexRPG.Entity
             this.Name = Name;
             Depth = 1f;
             Image = SpriteAtlas.Player_Down;
-            Debug.WriteLine($"{Coordinate.X}, {Coordinate.Y}");
         }
 
         /// <summary>
