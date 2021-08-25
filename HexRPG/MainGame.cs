@@ -11,8 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using static HexRPG.Utilities.FileUtilities;
-using HexRPG.Debug;
-using static HexRPG.Debug.DebugOverlay;
+using HexRPG.Overlay;
 using System.Collections.Generic;
 
 namespace HexRPG
@@ -28,8 +27,9 @@ namespace HexRPG
 
         // Main variables
         public static GraphicsDeviceManager Graphics;
-        SpriteBatch spriteBatch;
-        MapManager mapManager;
+        SpriteBatch SpriteBatch;
+        MapManager MapManager;
+        public static GameWindow GameWindow;
 
         // Art
         public static SpriteFont[] FontSet;
@@ -44,61 +44,21 @@ namespace HexRPG
         {
             // Create main game variables
             Graphics = new GraphicsDeviceManager(this);
+            HardwareUtilities.GraphicsDevice = Graphics;
             Content.RootDirectory = "Content";
             SaveType = GameOptions.SaveType;
             Player = new Player("");
+            GameWindow = Window;
 
             // Window properties
             IsMouseVisible = true;
             Graphics.HardwareModeSwitch = false;
-            Graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
-            Graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-            Window.AllowUserResizing = true;
+            Graphics.PreferredBackBufferHeight = GameWindow.ClientBounds.Height;
+            Graphics.PreferredBackBufferWidth = GameWindow.ClientBounds.Width;
+            GameWindow.AllowUserResizing = true;
             Graphics.ApplyChanges();
 
-            // Debugging
-            DebugOverlay.OverlayContents = new List<DebugOverlayItemType>()
-            {
-            DebugOverlayItemType.FPS,
-            DebugOverlayItemType.Zoom,
-            DebugOverlayItemType.Coordinates,
-            DebugOverlayItemType.LastInputDevice,
-            DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-DebugOverlayItemType.FPS,
-
-            };
+            GameWindow.ClientSizeChanged += WindowResized;
         }
 
         protected override void Initialize()
@@ -106,12 +66,12 @@ DebugOverlayItemType.FPS,
             base.Initialize();
             InputManager.Initialize();
             DebugOverlay.Initialize();
-            ViewPort.Initialize(Window.ClientBounds.Height, Window.ClientBounds.Width, CameraFocus.Player, Player);
+            ViewPort.Initialize(CameraFocus.Player, Player);
         }
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
             TextureIndex.LoadContent(Content);
             FontSet = new SpriteFont[]
             {
@@ -124,36 +84,36 @@ DebugOverlayItemType.FPS,
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            // Tertiary Updates
+            
+
             // Secondary Updates
             Player.Update();
-            ViewPort.Update(Window);
-
+            ViewPort.Update(GameWindow);
 
             // Main Updates
             InputManager.Update(IsActive, Exit);
-            DebugOverlay.Update(deltaTime);
+            Overlay.DebugOverlay.Update(gameTime);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, null);
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, null);
             GraphicsDevice.Clear(GameOptions.BackgroundColor);
-            DebugOverlay.Draw(spriteBatch);
+            Overlay.DebugOverlay.Draw(SpriteBatch);
             base.Draw(gameTime);
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, ViewPort.Camera);
-            Player.Draw(spriteBatch);
-            spriteBatch.End();
+            SpriteBatch.End();
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, ViewPort.Camera);
+            Player.Draw(SpriteBatch);
+            SpriteBatch.End();
         }
 
         public static void ToggleFullscreen()
         {
             Graphics.ToggleFullScreen();
-            ViewPort.WindowHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            ViewPort.WindowWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            UpdateForNewScreenSize();
+            DebugOverlay.RecalculatePositions();
         }
 
         public void ExitGame()
@@ -163,14 +123,12 @@ DebugOverlayItemType.FPS,
 
         public static void DebugToggle()
         {
-            IsVisible = !IsVisible;
+            DebugOverlay.IsVisible = !DebugOverlay.IsVisible;
         }
 
-        public void WindowResized()
+        public void WindowResized(Object sender, EventArgs e)
         {
-            ViewPort.WindowHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            ViewPort.WindowWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            UpdateForNewScreenSize();
+            DebugOverlay.RecalculatePositions();
         }
     }
 }
