@@ -1,12 +1,14 @@
-﻿using HexRPG.Dynamic;
+﻿using HexRPG.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using static HexRPG.Utilities.UIUtilities;
 
 namespace HexRPG.Overlay
 {
-    public class Zoom : IDebugOverlayItem
+    public class ProcessorArchitecture : IDebugOverlayItem
     {
         public Vector2 Coordinates { get; set; }
 
@@ -16,14 +18,13 @@ namespace HexRPG.Overlay
 
         public VerticalAlignment verticalAlignment { get; set; } = VerticalAlignment.Top;
 
-        public Zoom()
+        public ProcessorArchitecture()
         {
 
         }
 
         public void Update(GameTime gameTime)
         {
-
         }
 
         public void Draw(SpriteBatch spriteBatch, SpriteFont font, Color color)
@@ -33,7 +34,7 @@ namespace HexRPG.Overlay
 
         private string GetString()
         {
-            return $"CAMERA: {Math.Round(ViewPort.CamZoom, 2):0.00} / {ViewPort.CamZoomDest:0.00}";
+            return $"CPU: {HardwareUtilities.GetChipSetName()}";
         }
 
         public void RecalculatePosition(SpriteFont font)
@@ -47,6 +48,16 @@ namespace HexRPG.Overlay
                     break;
                 case HorizontalAlignment.Right:
                     x += HorizontalAlignRight(new Rectangle(0, 0, MainGame.GameWindow.ClientBounds.Width, MainGame.GameWindow.ClientBounds.Height), font.MeasureString(GetString()));
+                    break;
+            }
+
+            switch (verticalAlignment)
+            {
+                case VerticalAlignment.Center:
+                    y += VerticalAlignCenter(new Rectangle(0, 0, MainGame.GameWindow.ClientBounds.Width, MainGame.GameWindow.ClientBounds.Height), font.MeasureString(GetString()));
+                    break;
+                case VerticalAlignment.Bottom:
+                    y += VerticalAlignBottom(new Rectangle(0, 0, MainGame.GameWindow.ClientBounds.Width, MainGame.GameWindow.ClientBounds.Height), font.MeasureString(GetString()));
                     break;
             }
 

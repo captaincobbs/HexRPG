@@ -6,39 +6,52 @@ using System.Collections.Generic;
 using System.Text;
 using static HexRPG.Utilities.UIUtilities;
 
-namespace HexRPG.Debug
+namespace HexRPG.Overlay
 {
     public class Coordinate : IDebugOverlayItem
     {
-        public Vector2 Offset { get; set; }
-
-        private Vector2 PlayerCoordinates { get; set; }
-
         public Vector2 Coordinates { get; set; }
 
-        public VerticalAlignment verticalAlignment { get; set; } = VerticalAlignment.Manual;
+        public Vector2 Offset { get; set; } = new Vector2(0, 0);
 
-        public HorizontalAlignment horizontalAlignment { get; set; } = HorizontalAlignment.Manual;
+        public HorizontalAlignment horizontalAlignment { get; set; } = HorizontalAlignment.Left;
 
-        public Coordinate(Vector2 Coordinates)
+        public VerticalAlignment verticalAlignment { get; set; } = VerticalAlignment.Top;
+
+        public Coordinate()
         {
-            this.Offset = Coordinates;
-            PlayerCoordinates = MainGame.Player.Coordinate;
+
         }
 
-        public void Update(float deltaTime)
+        public void Update(GameTime gameTime)
         {
-            PlayerCoordinates = MainGame.Player.Coordinate;
         }
 
         public void Draw(SpriteBatch spriteBatch, SpriteFont font, Color color)
         {
-            spriteBatch.DrawString(font, $"COORD {PlayerCoordinates.X}, {PlayerCoordinates.Y}", Coordinates, color);
+            spriteBatch.DrawString(font, GetString(), Coordinates, color);
         }
 
-        public string GetStringValue()
+        private string GetString()
         {
-            return $"COORD {PlayerCoordinates.X}, {PlayerCoordinates.Y}";
+            return $"X,Y: {MainGame.Player.Coordinate.X}, {MainGame.Player.Coordinate.Y}";
+        }
+
+        public void RecalculatePosition(SpriteFont font)
+        {
+            int x = (int)Offset.X;
+            int y = (int)Offset.Y;
+            switch (horizontalAlignment)
+            {
+                case HorizontalAlignment.Center:
+                    x += HorizontalAlignCenter(new Rectangle(0, 0, MainGame.GameWindow.ClientBounds.Width, MainGame.GameWindow.ClientBounds.Height), font.MeasureString(GetString()));
+                    break;
+                case HorizontalAlignment.Right:
+                    x += HorizontalAlignRight(new Rectangle(0, 0, MainGame.GameWindow.ClientBounds.Width, MainGame.GameWindow.ClientBounds.Height), font.MeasureString(GetString()));
+                    break;
+            }
+
+            Coordinates = new Vector2(x, y);
         }
     }
 }
