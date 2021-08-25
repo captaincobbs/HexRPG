@@ -8,36 +8,36 @@ using System.Text;
 
 namespace HexRPG.Dynamic
 {
-    public class ViewPort
+    public static class ViewPort
     {
-        public Matrix Camera {get; private set;}
-        public CameraFocus cameraFocus { get; set; }
+        public static Matrix Camera {get; private set;}
+        public static CameraFocus cameraFocus { get; set; }
 
         // Camera properties
-        public float CamZoom = 2f;
-        public float CamZoomDest = 2f;
-        float maxCamZoom = 10f;
-        float minCamZoom = 1f;
-        int camX = 0;
-        int camY = 0;
-        private int camXDest = 0;
-        private int camYDest = 0;
-        private int windowHeight { get; set; }
-        private int windowWidth { get; set; }
-        private Player player { get; set; }
+        public static float CamZoom = 2f;
+        public static float CamZoomDest = 2f;
+        public static int WindowHeight { get; set; }
+        public static int WindowWidth { get; set; }
+        static float maxCamZoom = 10f;
+        static float minCamZoom = 0.75f;
+        static int camX = 0;
+        static int camY = 0;
+        private static int camXDest = 0;
+        private static int camYDest = 0;
+        private static Player player { get; set; }
 
-        public ViewPort(int windowHeight, int windowWidth, CameraFocus cameraFocus, Player player)
+        public static void Initialize(int windowHeight, int windowWidth, CameraFocus cameraFocus, Player player)
         {
-            this.windowWidth = windowWidth;
-            this.windowHeight = windowHeight;
-            this.cameraFocus = cameraFocus;
-            this.player = player;
+            WindowHeight = windowHeight;
+            WindowWidth = windowWidth;
+            ViewPort.cameraFocus = cameraFocus;
+            ViewPort.player = player;
         }
 
-        public void Update(GameWindow window)
+        public static void Update(GameWindow window)
         {
-            this.windowHeight = window.ClientBounds.Height;
-            this.windowWidth = window.ClientBounds.Width;
+            WindowHeight = window.ClientBounds.Height;
+            WindowWidth = window.ClientBounds.Width;
             if(cameraFocus == CameraFocus.Player)
             {
                 camXDest = (int)((player.Coordinate.X * GameOptions.TileSize) - (GameOptions.TileSize / 2));
@@ -51,13 +51,13 @@ namespace HexRPG.Dynamic
                 // Scroll In
                 if (InputManager.IsActionPressed(InputManager.InputAction.ZoomIn))
                 {
-                    CamZoomDest += InputManager.GetActionScroll(InputManager.InputAction.ZoomIn);
+                    CamZoomDest += GameOptions.ZoomThreshold * InputManager.GetActionScroll(InputManager.InputAction.ZoomIn);
                 }
 
                 // Scroll Out
                 if (InputManager.IsActionPressed(InputManager.InputAction.ZoomOut))
                 {
-                    CamZoomDest -= InputManager.GetActionScroll(InputManager.InputAction.ZoomOut);
+                    CamZoomDest -= GameOptions.ZoomThreshold * InputManager.GetActionScroll(InputManager.InputAction.ZoomOut);
                 }
 
                 // Reset camera zoom
@@ -74,8 +74,8 @@ namespace HexRPG.Dynamic
                 Camera =
                     Matrix.CreateTranslation(new Vector3(-camX, -camY, 0)) *
                     Matrix.CreateScale(new Vector3(CamZoom, CamZoom, 1)) *
-                    Matrix.CreateTranslation(new Vector3(windowWidth * 0.5f,
-                    windowHeight * 0.5f, 0));
+                    Matrix.CreateTranslation(new Vector3(WindowWidth * 0.5f,
+                    WindowHeight * 0.5f, 0));
             }
         }
     }
