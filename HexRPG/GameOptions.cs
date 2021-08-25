@@ -1,8 +1,11 @@
 ﻿//using HexRPG.Entity;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static HexRPG.Utilities.FileUtilities;
+using HexRPG.Fonts;
 
 namespace HexRPG
 {
@@ -16,36 +19,53 @@ namespace HexRPG
         /// <summary>
         /// Inertia speed of the camera
         /// </summary>
-        public static float InertiaFactor = 0.15f;
+        public const float InertiaFactor = 0.15f;
 
         /// <summary>
         /// Inertia speed of the player
         /// </summary>
-        public static float MovementInertiaFactor = 0.12f;
+        public const float MovementInertiaFactor = 0.12f;
 
         /// <summary>
         /// Length of a chunk in tiles
         /// </summary>
-        public static int ChunkSize = 20;
+        public const int ChunkSize = 20;
 
         /// <summary>
         /// Color of the game background when no content blocks it
         /// </summary>
-        public static Color BackgroundColor = Color.Black;
+        public static readonly Color BackgroundColor = Color.Black;
+
+        /// <summary>
+        /// Font color of debug text
+        /// </summary>
+        public static readonly Color ForegroundColor = Color.Green;
+
+        /// <summary>
+        /// Index of <see cref="SpriteFont"/> in <see cref="FontLibrary"/> to be used for debug text
+        /// </summary>
+        public const int ForegroundFont = 0;
 
         /// <summary>
         /// Determines the sensitivity of horizontal and vertical scrolling mappings, smaller numbers means more sensitivity.
         /// </summary>
-        public static float ScrollSensitivity = 5f;
+        public const float ScrollSensitivity = 10f;
 
         /// <summary>
         /// Threshold for gamepads on what is considered a button press
         /// </summary>
-        public static float AnalogSensitivity = 0.5f;
+        public const float AnalogSensitivity = 0.5f;
 
         /// <summary>
         /// Determines speed of horizontal and vertical scrolling for non-scroll inputs assigned to scrolling mappings, lower speed equals higher sensitivity.
         /// </summary>
-        public static float InputSensitivity = 15f;
+        public const float InputSensitivity = 15f;
+
+        /// <summary>
+        /// Determines the amount of "zoom" applied to the camera per scroll action
+        /// </summary>
+        public const float ZoomThreshold = 0.75f;
+
+        public readonly static SaveType SaveType = SaveType.JSON;
     }
 }
