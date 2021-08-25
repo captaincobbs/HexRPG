@@ -16,8 +16,6 @@ namespace HexRPG.Dynamic
         // Camera properties
         public static float CamZoom = 2f;
         public static float CamZoomDest = 2f;
-        public static int WindowHeight { get; set; }
-        public static int WindowWidth { get; set; }
         static float maxCamZoom = 10f;
         static float minCamZoom = 0.75f;
         static int camX = 0;
@@ -26,18 +24,14 @@ namespace HexRPG.Dynamic
         private static int camYDest = 0;
         private static Player player { get; set; }
 
-        public static void Initialize(int windowHeight, int windowWidth, CameraFocus cameraFocus, Player player)
+        public static void Initialize(CameraFocus cameraFocus, Player player)
         {
-            WindowHeight = windowHeight;
-            WindowWidth = windowWidth;
             ViewPort.cameraFocus = cameraFocus;
             ViewPort.player = player;
         }
 
         public static void Update(GameWindow window)
         {
-            WindowHeight = window.ClientBounds.Height;
-            WindowWidth = window.ClientBounds.Width;
             if(cameraFocus == CameraFocus.Player)
             {
                 camXDest = (int)((player.Coordinate.X * GameOptions.TileSize) - (GameOptions.TileSize / 2));
@@ -74,8 +68,8 @@ namespace HexRPG.Dynamic
                 Camera =
                     Matrix.CreateTranslation(new Vector3(-camX, -camY, 0)) *
                     Matrix.CreateScale(new Vector3(CamZoom, CamZoom, 1)) *
-                    Matrix.CreateTranslation(new Vector3(WindowWidth * 0.5f,
-                    WindowHeight * 0.5f, 0));
+                    Matrix.CreateTranslation(new Vector3(MainGame.GameWindow.ClientBounds.Width * 0.5f,
+                    MainGame.GameWindow.ClientBounds.Height * 0.5f, 0));
             }
         }
     }
