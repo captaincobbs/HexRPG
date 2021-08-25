@@ -67,7 +67,9 @@ namespace HexRPG.Utilities
 
             // Append all strings and flush.
             string logAsString = "";
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             log.ForEach((str) => logAsString += str);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             try
             {
