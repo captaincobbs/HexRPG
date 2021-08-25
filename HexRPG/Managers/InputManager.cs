@@ -167,6 +167,11 @@ namespace HexRPG.Entity
             /// <see cref="InputAction"/> for scrolling the camera out
             /// </summary>
             ZoomOut,
+
+            /// <summary>
+            /// <see cref="InputAction"/> for toggling visibility of debug overlay
+            /// </summary>
+            DebugToggle,
         }
         /// <summary>
         /// General input of all mice controls simplified into one format
@@ -1001,6 +1006,10 @@ namespace HexRPG.Entity
             Mappings[(int)InputAction.ZoomOut].gamePadButtons.Add(GamePadButton.RightStickDown);
             Mappings[(int)InputAction.ZoomOut].gamePadButtons.Add(GamePadButton.B);
             Mappings[(int)InputAction.ZoomOut].mouseActions.Add(MouseAction.ScrollOut);
+
+            // DebugToggle
+            Mappings[(int)InputAction.DebugToggle] = new ActionMapping();
+            Mappings[(int)InputAction.DebugToggle].keyboardKeys.Add(Keys.F1);
         }
 
 
@@ -1154,7 +1163,7 @@ namespace HexRPG.Entity
             DefaultActionMaps();
         }
 
-        public static void Update(bool IsActive, Action toggleFullscreen, Action exitGame)
+        public static void Update(bool IsActive, Action exit)
         {
             previousKeyboardState = CurrentKeyboardState;
             CurrentKeyboardState = Keyboard.GetState();
@@ -1179,19 +1188,24 @@ namespace HexRPG.Entity
             PreviousDeltaHorizontalScrollWheelValue = CurrentDeltaHorizontalScrollWheelValue;
             CurrentDeltaHorizontalScrollWheelValue = CurrentHorizontalScrollWheelValue - PreviousHorizontalScrollWheelValue;
 
-            GlobalKeyCommands(toggleFullscreen, exitGame);
+            GlobalKeyCommands(exit);
         }
 
-        private static void GlobalKeyCommands(Action toggleFullscreen, Action exitGame)
+        private static void GlobalKeyCommands(Action exit)
         {
             if (IsActionTriggered(InputAction.Fullscreen))
             {
-                toggleFullscreen();
+                MainGame.ToggleFullscreen();
             }
 
             if (IsActionTriggered(InputAction.ExitGame))
             {
-                exitGame();
+                exit();
+            }
+
+            if (IsActionTriggered(InputAction.DebugToggle))
+            {
+                MainGame.DebugToggle();
             }
         }
         #endregion Functions
