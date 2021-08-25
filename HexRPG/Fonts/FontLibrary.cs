@@ -7,7 +7,7 @@ using System.Text;
 
 namespace HexRPG.Fonts
 {
-    public  class FontLibrary
+    public class FontLibrary
     {
         public static SpriteFont Battlenet(GraphicsDevice graphicsDevice)
         {
