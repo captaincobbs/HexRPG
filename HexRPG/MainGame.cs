@@ -100,9 +100,9 @@ namespace HexRPG
             _frameCounter.Update(deltaTime);
             string fps = string.Format($"FPS     {_frameCounter.AverageFramesPerSecond}");
             string loc = string.Format($"COORD {player.Coordinate.X}, {player.Coordinate.Y}");
-            string zom = string.Format($"ZOOM   {Math.Round(ViewPort.CamZoom, 1)} / {ViewPort.CamZoomDest}");
+            string zom = string.Format($"ZOOM   {Math.Round(ViewPort.CamZoom, 1):0.0} / {ViewPort.CamZoomDest:0.0}");
             string lui = string.Format($"INPUT  {InputManager.InputTypeLabel[(int)InputManager.LastUsedInput]}");
-            spriteBatch.DrawString(fonts[0], fps, new Vector2(4, 1), Color.Green);
+            spriteBatch.DrawString(fonts[0], fps, new Vector2(4, 0), Color.Green);
             spriteBatch.DrawString(fonts[0], loc, new Vector2(4, 24), Color.Green);
             spriteBatch.DrawString(fonts[0], zom, new Vector2(4, 48), Color.Green);
             spriteBatch.DrawString(fonts[0], lui, new Vector2(4, 72), Color.Green);
