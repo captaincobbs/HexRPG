@@ -20,7 +20,8 @@ namespace HexRPG.Overlay
             {
                 new FPS() { Offset = new Vector2(4, 0)},
                 new Coordinate() {Offset = new Vector2(-4, 0), horizontalAlignment = HorizontalAlignment.Right},
-                new LastUsedInput() {Offset = new Vector2(4, 12) },
+                new CameraCoordinates() {Offset = new Vector2(-4, 24), horizontalAlignment = HorizontalAlignment.Right},
+                new LastUsedInput() {Offset = new Vector2(4, 12)},
                 new Zoom() {Offset = new Vector2(-4, 12), horizontalAlignment = HorizontalAlignment.Right },
                 new GraphicsDevice() {Offset = new Vector2(-4, -2), horizontalAlignment = HorizontalAlignment.Right, verticalAlignment = VerticalAlignment.Bottom},
                 new ProcessorArchitecture() {Offset = new Vector2(4, -2), verticalAlignment = VerticalAlignment.Bottom}
