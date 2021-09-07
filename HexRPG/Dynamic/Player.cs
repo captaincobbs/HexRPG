@@ -1,4 +1,5 @@
-﻿using HexRPG.Sprite;
+﻿using HexRPG.Dynamic;
+using HexRPG.Sprite;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,7 +14,7 @@ namespace HexRPG.Entity
     /// <summary>
     /// Class of the controllable player, moves around the map from user input
     /// </summary>
-    public class Player
+    public class Player : IEntity
     {
         /// <summary>
         /// Name of the player, inputted by user
@@ -38,12 +39,17 @@ namespace HexRPG.Entity
         /// <summary>
         /// Effective location of the player character on the world, represented in X & Y on the hexagon grid.
         /// </summary>
-        public Vector2 Coordinate { get; set; }
+        public Vector2 Coordinates { get; set; }
 
         /// <summary>
         /// Coordinate of the graphical representation of the player, NOT the player's effective coordinates
         /// </summary>
-        private Vector2 AnimCoordinate { get; set; }
+        public Vector2 AnimCoordinate { get; set; }
+
+        /// <summary>
+        /// Current X & Y coordinates of the player on the world grid, in pixels
+        /// </summary>
+        public Vector2 DrawnCoordinates { get { return new Vector2(AnimCoordinate.X * GameOptions.TileSize, AnimCoordinate.Y * GameOptions.TileSize); } }
 
         /// <summary>
         /// Direction player sprite is facing
@@ -79,7 +85,7 @@ namespace HexRPG.Entity
         /// <param name="Name">The players chosen name</param>
         public Player(string Name)
         {
-            Coordinate = new Vector2(0, 0);
+            Coordinates = new Vector2(0, 0);
             AnimCoordinate = new Vector2(GameOptions.ChunkSize / 2, GameOptions.ChunkSize / 2);
             this.Name = Name;
             Depth = 1f;
@@ -99,8 +105,8 @@ namespace HexRPG.Entity
 
             // Update the animation coordinate to make character slide
             AnimCoordinate = new Vector2(
-            (Coordinate.X - AnimCoordinate.X) * GameOptions.MovementInertiaFactor + AnimCoordinate.X,
-            (Coordinate.Y - AnimCoordinate.Y) * GameOptions.MovementInertiaFactor + AnimCoordinate.Y
+            (Coordinates.X - AnimCoordinate.X) * GameOptions.MovementInertiaFactor + AnimCoordinate.X,
+            (Coordinates.Y - AnimCoordinate.Y) * GameOptions.MovementInertiaFactor + AnimCoordinate.Y
             );
 
             // Frame Counting
@@ -179,54 +185,54 @@ namespace HexRPG.Entity
             if (xMove == 1 && yMove == 0)
             {
                 Image = SpriteAtlas.Player_Right;
-                Coordinate = new Vector2(Coordinate.X + 1, Coordinate.Y);
+                Coordinates = new Vector2(Coordinates.X + 1, Coordinates.Y);
             }
             // Down Right
             else if (xMove == 1 && yMove == 1)
             {
                 Image = SpriteAtlas.Player_BottomRight;
-                Coordinate = new Vector2(Coordinate.X + 1, Coordinate.Y);
-                Coordinate = new Vector2(Coordinate.X, Coordinate.Y + 1);
+                Coordinates = new Vector2(Coordinates.X + 1, Coordinates.Y);
+                Coordinates = new Vector2(Coordinates.X, Coordinates.Y + 1);
 
             }
             // Down
             else if (xMove == 0 && yMove == 1)
             {
                 Image = SpriteAtlas.Player_Down;
-                Coordinate = new Vector2(Coordinate.X, Coordinate.Y + 1);
+                Coordinates = new Vector2(Coordinates.X, Coordinates.Y + 1);
             }
             // Down Left
             if (xMove == -1 && yMove == 1)
             {
                 Image = SpriteAtlas.Player_BottomLeft;
-                Coordinate = new Vector2(Coordinate.X - 1, Coordinate.Y);
-                Coordinate = new Vector2(Coordinate.X, Coordinate.Y + 1);
+                Coordinates = new Vector2(Coordinates.X - 1, Coordinates.Y);
+                Coordinates = new Vector2(Coordinates.X, Coordinates.Y + 1);
             }
             // Left
             else if (xMove == -1 && yMove == 0)
             {
                 Image = SpriteAtlas.Player_Left;
-                Coordinate = new Vector2(Coordinate.X - 1, Coordinate.Y);
+                Coordinates = new Vector2(Coordinates.X - 1, Coordinates.Y);
             }
             // Up Left
             else if (xMove == -1 && yMove == -1)
             {
                 Image = SpriteAtlas.Player_TopLeft;
-                Coordinate = new Vector2(Coordinate.X - 1, Coordinate.Y);
-                Coordinate = new Vector2(Coordinate.X, Coordinate.Y - 1);
+                Coordinates = new Vector2(Coordinates.X - 1, Coordinates.Y);
+                Coordinates = new Vector2(Coordinates.X, Coordinates.Y - 1);
             }
             // Up
             else if (xMove == 0 && yMove == -1)
             {
                 Image = SpriteAtlas.Player_Up;
-                Coordinate = new Vector2(Coordinate.X, Coordinate.Y - 1);
+                Coordinates = new Vector2(Coordinates.X, Coordinates.Y - 1);
             }
             // Up Right
             else if (xMove == 1 && yMove == -1)
             {
                 Image = SpriteAtlas.Player_TopRight;
-                Coordinate = new Vector2(Coordinate.X + 1, Coordinate.Y);
-                Coordinate = new Vector2(Coordinate.X, Coordinate.Y - 1);
+                Coordinates = new Vector2(Coordinates.X + 1, Coordinates.Y);
+                Coordinates = new Vector2(Coordinates.X, Coordinates.Y - 1);
             }
 
             // Reset movement direction
@@ -237,8 +243,8 @@ namespace HexRPG.Entity
         public void Draw(SpriteBatch spriteBatch)
         {
             Rectangle destRect = new Rectangle(
-               (int)(AnimCoordinate.X * GameOptions.TileSize) - (GameOptions.TileSize / 2),
-               (int)(AnimCoordinate.Y * GameOptions.TileSize) - (GameOptions.TileSize / 2),
+               (int)DrawnCoordinates.X,
+               (int)DrawnCoordinates.Y,
                GameOptions.TileSize,
                GameOptions.TileSize);
 
