@@ -50,6 +50,8 @@ namespace HexRPG.Entity
         /// Direction player sprite is facing
         /// </summary>
         public float Rotation { get; set; }
+
+        // Threshold for movement rate
         private int frameCounter = 0;
         private int frameLimit = 8;
 
@@ -58,20 +60,25 @@ namespace HexRPG.Entity
         /// Vertical movement states for the player
         /// </summary>
         public enum VerticalPlayerDirection { None, Up, Down }
+
         /// <summary>
         /// Horizontal movement states for the player
         /// </summary>
         public enum HorizontalPlayerDirection { None, Right, Left }
+
         /// <summary>
         /// Vertical movement state the player is planning on moving to
         /// </summary>
         public static VerticalPlayerDirection VerticalIndicatedDirection = VerticalPlayerDirection.None;
+
         /// <summary>
         /// Horizontal movement state the player is planning on moving to
         /// </summary>
         public static HorizontalPlayerDirection HorizontalIndicatedDirection = HorizontalPlayerDirection.None;
 
+        /// <summary>
         /// <inheritdoc/>
+        /// </summary>
         public bool IsEntity { get; } = true;
 
         /// <summary>
@@ -115,6 +122,9 @@ namespace HexRPG.Entity
             }
         }
 
+        /// <summary>
+        /// Handles movement input
+        /// </summary>
         private void HandleMovement()
         {
             // Keyboard input
@@ -164,6 +174,9 @@ namespace HexRPG.Entity
             }
         }
 
+        /// <summary>
+        /// Uses movement input to move character
+        /// </summary>
         private void Move()
         {
             // Convert indicated direction state to movement, Right = Positive X, Down = Positive Y
@@ -235,6 +248,10 @@ namespace HexRPG.Entity
             HorizontalIndicatedDirection = HorizontalPlayerDirection.None;
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        /// <param name="spriteBatch"><inheritdoc/></param>
         public void Draw(SpriteBatch spriteBatch)
         {
             Rectangle destRect = new Rectangle(

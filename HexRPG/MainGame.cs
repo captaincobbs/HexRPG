@@ -1,42 +1,39 @@
 ﻿using HexRPG.Dynamic;
 using HexRPG.Entity;
-using HexRPG.Generation;
 using HexRPG.Managers;
 using HexRPG.Sprite;
 using HexRPG.Fonts;
 using HexRPG.Utilities;
-using HexRPG.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
 using static HexRPG.Utilities.FileUtilities;
 using HexRPG.Overlay;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace HexRPG
 {
     public class MainGame : Game
     {
         /// <summary>
-        /// Determines the format in which user files will be exported as
+        /// The active user-controlled player
         /// </summary>
-        public SaveType SaveType { get; set; }
-
         public static Player Player { get; set; }
 
         // Main variables
+        /// <summary>
+        /// Presentation of the graphics device
+        /// </summary>
         public static GraphicsDeviceManager Graphics;
+
         SpriteBatch SpriteBatch;
         MapManager MapManager;
         public static GameWindow GameWindow;
 
         // Art
+        /// <summary>
+        /// Array of all fonts used by the game
+        /// </summary>
         public static SpriteFont[] FontSet;
-
-        // Debug
-
 
         /// <summary>
         /// Main Instance of the game that instantiates and creates all primary properties, generators, and managers.
@@ -47,7 +44,6 @@ namespace HexRPG
             Graphics = new GraphicsDeviceManager(this);
             HardwareUtilities.GraphicsDevice = Graphics;
             Content.RootDirectory = "Content";
-            SaveType = GameOptions.SaveType;
             Player = new Player("");
             GameWindow = Window;
 
@@ -62,6 +58,9 @@ namespace HexRPG
             GameWindow.ClientSizeChanged += WindowResized;
         }
 
+        /// <summary>
+        /// Prepares static classes, runs on game launch
+        /// </summary>
         protected override void Initialize()
         {
             base.Initialize();
@@ -71,6 +70,9 @@ namespace HexRPG
             CameraManager.Initialize(new EntityFocus(Player), GraphicsDevice.Viewport);
         }
 
+        /// <summary>
+        /// Loads game content, runs on game content
+        /// </summary>
         protected override void LoadContent()
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
@@ -82,6 +84,10 @@ namespace HexRPG
             
         }
 
+        /// <summary>
+        /// Called each tick, runs game logic
+        /// </summary>
+        /// <param name="gameTime">Holds the time state of the game</param>
         protected override void Update(GameTime gameTime)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -100,6 +106,10 @@ namespace HexRPG
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Called each frame, runs rendering logic
+        /// </summary>
+        /// <param name="gameTime">Holds the time state of the game</param>
         protected override void Draw(GameTime gameTime)
         {
             // Draw Background
@@ -117,22 +127,34 @@ namespace HexRPG
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Called on <see cref="InputManager.ActionMapping"/> <see cref="InputManager.InputAction.Fullscreen"/>, toggles fullscreen and recalculates the positions of the debug overlay.
+        /// </summary>
         public static void ToggleFullscreen()
         {
             Graphics.ToggleFullScreen();
             DebugOverlay.RecalculatePositions();
         }
 
+        /// <summary>
+        /// Called on <see cref="InputManager.ActionMapping"/> <see cref="InputManager.InputAction.ExitGame"/>, triggers exit logic
+        /// </summary>
         public void ExitGame()
         {
             Exit();
         }
 
+        /// <summary>
+        /// Called on <see cref="InputManager.ActionMapping"/> <see cref="InputManager.InputAction.DebugToggle"/>, toggles visibility of the overlay
+        /// </summary>
         public static void DebugToggle()
         {
             DebugOverlay.IsVisible = !DebugOverlay.IsVisible;
         }
 
+        /// <summary>
+        /// Called when window is resized, runs recalculation logic
+        /// </summary>
         public void WindowResized(Object sender, EventArgs e)
         {
             DebugOverlay.RecalculatePositions();

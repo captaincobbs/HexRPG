@@ -13,7 +13,14 @@ namespace HexRPG.Dynamic
 {
     public static class CameraManager
     {
+        /// <summary>
+        /// Matrix of CameraManager used for rendering
+        /// </summary>
         public static Matrix Camera { get; private set; }
+
+        /// <summary>
+        /// Current focus of the camera
+        /// </summary>
         public static IFocusObject CameraFocus { get; set; }
 
         // Camera properties
@@ -37,10 +44,14 @@ namespace HexRPG.Dynamic
         /// </summary>
         public static Vector2 TargetCoordinates { get; set; } = new Vector2(0, 0);
 
-        private static Viewport Viewport { get; set; }
+        /// <summary>
+        /// View bounds for player
+        /// </summary>
+        public static Viewport Viewport { get; set; }
 
         static float maxCamZoom = 10f;
         static float minCamZoom = 0.75f;
+
 
         public static void Initialize(IFocusObject cameraFocus, Viewport viewPort)
         {
@@ -56,13 +67,12 @@ namespace HexRPG.Dynamic
             // If camera isn't manually controlled, interporate between target position and current position
             if (CameraFocus.GetType() != typeof(PlayerControlled))
             {
-                TargetCoordinates = new Vector2(
-                    CameraFocus.GetPosition().X - (GameOptions.TileSize / 2),
-                    CameraFocus.GetPosition().Y - (GameOptions.TileSize / 2));
-                Coordinates = Vector2.Round(new Vector2(
+                TargetCoordinates = Vector2.Round(new Vector2(
+                    CameraFocus.GetPosition().X,
+                    CameraFocus.GetPosition().Y));
+                Coordinates = new Vector2(
                     Coordinates.X + (TargetCoordinates.X - Coordinates.X) * GameOptions.CameraScrollInertia,
-                    Coordinates.Y + (TargetCoordinates.Y - Coordinates.Y) * GameOptions.CameraScrollInertia));
-
+                    Coordinates.Y + (TargetCoordinates.Y - Coordinates.Y) * GameOptions.CameraScrollInertia);
             }
             // If camera is manually controlled, watch for input
             else
