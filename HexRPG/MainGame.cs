@@ -66,7 +66,7 @@ namespace HexRPG
             base.Initialize();
             InputManager.Initialize();
             DebugOverlay.Initialize();
-            ViewPort.Initialize(CameraFocus.Player, Player);
+            ViewPort.Initialize(new CameraFocus(new EntityFocus(Player)));
         }
 
         protected override void LoadContent()
