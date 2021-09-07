@@ -65,8 +65,9 @@ namespace HexRPG
         {
             base.Initialize();
             InputManager.Initialize();
+            HardwareUtilities.Initialize();
             DebugOverlay.Initialize();
-            ViewPort.Initialize(new EntityFocus(Player));
+            CameraManager.Initialize(new StaticFocus(new Vector2(0, 0)));
         }
 
         protected override void LoadContent()
@@ -89,24 +90,29 @@ namespace HexRPG
 
             // Secondary Updates
             Player.Update();
-            ViewPort.Update();
+            CameraManager.Update();
 
             // Main Updates
             InputManager.Update(IsActive, Exit);
-            Overlay.DebugOverlay.Update(gameTime);
+            DebugOverlay.Update(gameTime);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, null);
+            // Draw Background
             GraphicsDevice.Clear(GameOptions.BackgroundColor);
-            Overlay.DebugOverlay.Draw(SpriteBatch);
             base.Draw(gameTime);
-            SpriteBatch.End();
-            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, ViewPort.Camera);
+
+            // Draw Game Objects
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, CameraManager.Camera);
             Player.Draw(SpriteBatch);
+            SpriteBatch.End();
+
+            // Draw Overlay
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, null);
+            DebugOverlay.Draw(SpriteBatch);
             SpriteBatch.End();
         }
 
