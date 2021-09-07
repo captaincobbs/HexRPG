@@ -13,6 +13,7 @@ using System;
 using static HexRPG.Utilities.FileUtilities;
 using HexRPG.Overlay;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace HexRPG
 {
@@ -67,7 +68,7 @@ namespace HexRPG
             InputManager.Initialize();
             HardwareUtilities.Initialize();
             DebugOverlay.Initialize();
-            CameraManager.Initialize(new StaticFocus(new Vector2(0, 0)));
+            CameraManager.Initialize(new EntityFocus(Player), GraphicsDevice.Viewport);
         }
 
         protected override void LoadContent()
@@ -103,7 +104,6 @@ namespace HexRPG
         {
             // Draw Background
             GraphicsDevice.Clear(GameOptions.BackgroundColor);
-            base.Draw(gameTime);
 
             // Draw Game Objects
             SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, CameraManager.Camera);
@@ -114,6 +114,7 @@ namespace HexRPG
             SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, null);
             DebugOverlay.Draw(SpriteBatch);
             SpriteBatch.End();
+            base.Draw(gameTime);
         }
 
         public static void ToggleFullscreen()
