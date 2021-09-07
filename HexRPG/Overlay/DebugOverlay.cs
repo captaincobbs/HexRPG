@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using static HexRPG.Utilities.UIUtilities;
 
 namespace HexRPG.Overlay
@@ -30,9 +27,9 @@ namespace HexRPG.Overlay
                 // Bottom Left
                 new ProcessorArchitecture() {Offset = new Vector2(4, -14), verticalAlignment = VerticalAlignment.Bottom},
                 new GraphicsDevice() {Offset = new Vector2(4, -2), verticalAlignment = VerticalAlignment.Bottom},
-                new AssemblyRuntime() {Offset = new Vector2(4, -26), verticalAlignment = VerticalAlignment.Bottom},
 
                 // Bottom Right
+                new AssemblyRuntime() {Offset = new Vector2(-4, -2), horizontalAlignment = HorizontalAlignment.Right, verticalAlignment = VerticalAlignment.Bottom},
             };
             RecalculatePositions();
         }
