@@ -33,7 +33,7 @@ namespace HexRPG.Overlay
 
         private string GetString()
         {
-            return $"CAMERA: {Math.Round(ViewPort.CamZoom, 2):0.00} / {ViewPort.CamZoomDest:0.00}";
+            return $"CAMERA: {Math.Round(ViewPort.ZoomValue, 2):0.00} / {ViewPort.ZoomDestination:0.00}";
         }
 
         public void RecalculatePosition(SpriteFont font)
