@@ -10,74 +10,121 @@ namespace HexRPG.Dynamic
 {
     public static class ViewPort
     {
-        public static Matrix Camera {get; private set;}
+        public static Matrix Camera { get; private set; }
         public static CameraFocus cameraFocus { get; set; }
 
         // Camera properties
-        public static float CamZoom = 2f;
-        public static float CamZoomDest = 2f;
+        /// <summary>
+        /// Current value of the Camera Zoom
+        /// </summary>
+        public static float ZoomValue = 2f;
+
+        /// <summary>
+        /// Destination value for the Camera Zoom over time
+        /// </summary>
+        public static float ZoomDestination = 2f;
+
+        /// <summary>
+        /// Current X,Y Coordiates of the Camera
+        /// </summary>
+        public static Vector2 Coordinates = new Vector2(0, 0);
+
         static float maxCamZoom = 10f;
         static float minCamZoom = 0.75f;
-        static int camX = 0;
-        static int camY = 0;
-        private static int camXDest = 0;
-        private static int camYDest = 0;
-        private static Player player { get; set; }
+        static float horizontalBounds = 0f;
+        static float verticalBounds = 0f;
+        static float cameraSmoothing = 10;
 
-        public static void Initialize(CameraFocus cameraFocus, Player player)
+        public static void Initialize(CameraFocus cameraFocus)
         {
             ViewPort.cameraFocus = cameraFocus;
-            ViewPort.player = player;
         }
 
         public static void Update(GameWindow window)
         {
-            if(cameraFocus == CameraFocus.Player)
+            // Apply zoom delta to current zoom value
+            ZoomValue += ((ZoomDestination - ZoomValue) * GameOptions.CameraZoomInertia);
+
+            // Scroll In
+            if (InputManager.IsActionPressed(InputManager.InputAction.ZoomIn))
             {
-                camXDest = (int)((player.Coordinate.X * GameOptions.TileSize) - (GameOptions.TileSize / 2));
-                camYDest = (int)((player.Coordinate.Y * GameOptions.TileSize) - (GameOptions.TileSize / 2));
-                camX += (int)((camXDest - camX) * GameOptions.InertiaFactor);
-                camY += (int)((camYDest - camY) * GameOptions.InertiaFactor);
-
-                // Scrolling
-                CamZoom += ((CamZoomDest - CamZoom) * GameOptions.InertiaFactor);
-
-                // Scroll In
-                if (InputManager.IsActionPressed(InputManager.InputAction.ZoomIn))
-                {
-                    CamZoomDest += GameOptions.ZoomThreshold * InputManager.GetActionScroll(InputManager.InputAction.ZoomIn);
-                }
-
-                // Scroll Out
-                if (InputManager.IsActionPressed(InputManager.InputAction.ZoomOut))
-                {
-                    CamZoomDest -= GameOptions.ZoomThreshold * InputManager.GetActionScroll(InputManager.InputAction.ZoomOut);
-                }
-
-                // Reset camera zoom
-                if (InputManager.IsActionPressed(InputManager.InputAction.ZoomReset))
-                {
-                    CamZoomDest = 2f;
-                }
-
-                // Keep camera zoom within a specific range
-                CamZoomDest = MathUtilities.ContainInRange(CamZoomDest, minCamZoom, maxCamZoom);
-                CamZoom = MathUtilities.ContainInRange(CamZoom, minCamZoom, maxCamZoom);
-
-                // Change camera matrix properties with updated information
-                Camera =
-                    Matrix.CreateTranslation(new Vector3(-camX, -camY, 0)) *
-                    Matrix.CreateScale(new Vector3(CamZoom, CamZoom, 1)) *
-                    Matrix.CreateTranslation(new Vector3(MainGame.GameWindow.ClientBounds.Width * 0.5f,
-                    MainGame.GameWindow.ClientBounds.Height * 0.5f, 0));
+                ZoomDestination += GameOptions.ZoomThreshold * InputManager.GetActionScroll(InputManager.InputAction.ZoomIn);
             }
+
+            // Scroll Out
+            if (InputManager.IsActionPressed(InputManager.InputAction.ZoomOut))
+            {
+                ZoomDestination -= GameOptions.ZoomThreshold * InputManager.GetActionScroll(InputManager.InputAction.ZoomOut);
+            }
+
+            // Reset camera zoom
+            if (InputManager.IsActionPressed(InputManager.InputAction.ZoomReset))
+            {
+                ZoomDestination = 2f;
+            }
+
+            // Keep camera zoom within a specific range
+            ZoomDestination = MathUtilities.Clamp(ZoomDestination, minCamZoom, maxCamZoom);
+            ZoomValue = MathUtilities.Clamp(ZoomValue, minCamZoom, maxCamZoom);
+
+            // Change camera matrix properties with updated information
+            Camera =
+                Matrix.CreateTranslation(new Vector3(Coordinates, 0)) *
+                Matrix.CreateScale(new Vector3(ZoomValue, ZoomValue, 1)) *
+                Matrix.CreateTranslation(new Vector3(MainGame.GameWindow.ClientBounds.Width / 2,
+                MainGame.GameWindow.ClientBounds.Height / 2, 0));
+        }
+
+        public static void Follow()
+        {
+
         }
     }
     
-    public enum CameraFocus
+    public class CameraFocus
     {
-        Player,
-        Entity,
-        Free
+        public IFocusObject FocusObject { get; set; }
+        public CameraFocus(IFocusObject focusObject)
+        {
+            FocusObject = focusObject;
+        }
+    }
+
+    public interface IFocusObject
+    {
+        public Vector2 GetPosition()
+        {
+            return new Vector2(0, 0);
+        }
+    }
+
+    public class EntityFocus : IFocusObject
+    {
+        private IEntity focusObject { get; set; }
+
+        public EntityFocus(IEntity focusObject)
+        {
+            this.focusObject = focusObject;
+        }
+
+        public Vector2 GetPosition()
+        {
+            return focusObject.AnimCoordinate;
+        }
+    }
+
+    public class StaticFocus : IFocusObject
+    {
+        private Vector2 staticPosition { get; set; }
+
+        public StaticFocus(Vector2 staticPosition)
+        {
+            this.staticPosition = staticPosition;
+        }
+
+        public Vector2 GetPosition()
+        {
+            return staticPosition;
+        }
     }
 }
