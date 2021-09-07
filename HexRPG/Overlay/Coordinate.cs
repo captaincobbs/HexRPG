@@ -34,7 +34,7 @@ namespace HexRPG.Overlay
 
         private string GetString()
         {
-            return $"X,Y: {MainGame.Player.Coordinates.X}, {MainGame.Player.Coordinates.Y}";
+            return $"PLAYER: {MainGame.Player.Coordinates.X}, {MainGame.Player.Coordinates.Y}";
         }
 
         public void RecalculatePosition(SpriteFont font)
