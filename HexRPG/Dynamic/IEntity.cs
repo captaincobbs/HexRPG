@@ -21,10 +21,5 @@ namespace HexRPG.Dynamic
         /// Coordinate of the graphical representation of the entity, NOT the player's effective coordinates
         /// </summary>
         public Vector2 AnimCoordinate { get; set; }
-
-        /// <summary>
-        /// Current X & Y coordinates of the entity on the world grid, in pixels
-        /// </summary>
-        public Vector2 DrawnCoordinates { get { return new Vector2(AnimCoordinate.X * GameOptions.TileSize, AnimCoordinate.Y * GameOptions.TileSize); } }
     }
 }

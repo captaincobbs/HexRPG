@@ -47,11 +47,6 @@ namespace HexRPG.Entity
         public Vector2 AnimCoordinate { get; set; }
 
         /// <summary>
-        /// Current X & Y coordinates of the player on the world grid, in pixels
-        /// </summary>
-        public Vector2 DrawnCoordinates { get { return new Vector2(AnimCoordinate.X * GameOptions.TileSize, AnimCoordinate.Y * GameOptions.TileSize); } }
-
-        /// <summary>
         /// Direction player sprite is facing
         /// </summary>
         public float Rotation { get; set; }
@@ -243,8 +238,8 @@ namespace HexRPG.Entity
         public void Draw(SpriteBatch spriteBatch)
         {
             Rectangle destRect = new Rectangle(
-               (int)DrawnCoordinates.X,
-               (int)DrawnCoordinates.Y,
+               (int)(AnimCoordinate.X * GameOptions.TileSize),
+               (int)(AnimCoordinate.Y * GameOptions.TileSize),
                GameOptions.TileSize,
                GameOptions.TileSize);
 
