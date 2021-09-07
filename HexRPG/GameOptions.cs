@@ -17,9 +17,14 @@ namespace HexRPG
         public const int TileSize = 32;
 
         /// <summary>
-        /// Inertia speed of the camera
+        /// Inertia rate of the camera when scrolling
         /// </summary>
-        public const float InertiaFactor = 0.15f;
+        public const float CameraScrollInertia = 0.15f;
+
+        /// <summary>
+        /// Inertia rate of the camera when zooming
+        /// </summary>
+        public const float CameraZoomInertia = 0.15f;
 
         /// <summary>
         /// Inertia speed of the player
