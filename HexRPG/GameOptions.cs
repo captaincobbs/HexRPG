@@ -19,7 +19,7 @@ namespace HexRPG
         /// <summary>
         /// Inertia rate of the camera when scrolling
         /// </summary>
-        public const float CameraScrollInertia = 0.15f;
+        public const float CameraScrollInertia = 0.08f;
 
         /// <summary>
         /// Inertia rate of the camera when zooming
