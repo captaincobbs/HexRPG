@@ -1020,7 +1020,11 @@ namespace HexRPG.Entity
         /// <returns>Whether the Action has any pressed mapped inputs</returns>
         public static bool IsActionPressed(InputAction action)
         {
-            return IsActionMapPressed(Mappings[(int)action]);
+            if (IsActive)
+            {
+                return IsActionMapPressed(Mappings[(int)action]);
+            }
+            return false;
         }
 
         /// <summary>
@@ -1030,7 +1034,11 @@ namespace HexRPG.Entity
         /// <returns>Whether the Action has any pressed mapped inputs</returns>
         public static bool IsActionTriggered(InputAction action)
         {
-            return IsActionMapTriggered(Mappings[(int)action]);
+            if (IsActive)
+            {
+                return IsActionMapTriggered(Mappings[(int)action]);
+            }
+            return false;
         }
 
         public static float GetActionScroll(InputAction action)
