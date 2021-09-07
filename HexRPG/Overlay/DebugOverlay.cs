@@ -18,13 +18,21 @@ namespace HexRPG.Overlay
         {
             DebugOverlayItems = new List<IDebugOverlayItem>()
             {
+                // Top Left
                 new FPS() { Offset = new Vector2(4, 0)},
-                new Coordinate() {Offset = new Vector2(-4, 0), horizontalAlignment = HorizontalAlignment.Right},
-                new CameraCoordinates() {Offset = new Vector2(-4, 24), horizontalAlignment = HorizontalAlignment.Right},
                 new LastUsedInput() {Offset = new Vector2(4, 12)},
-                new Zoom() {Offset = new Vector2(-4, 12), horizontalAlignment = HorizontalAlignment.Right },
-                new GraphicsDevice() {Offset = new Vector2(-4, -2), horizontalAlignment = HorizontalAlignment.Right, verticalAlignment = VerticalAlignment.Bottom},
-                new ProcessorArchitecture() {Offset = new Vector2(4, -2), verticalAlignment = VerticalAlignment.Bottom}
+
+                // Top Right
+                new Coordinate() {Offset = new Vector2(-4, 0), horizontalAlignment = HorizontalAlignment.Right},
+                new CameraCoordinates() {Offset = new Vector2(-4, 12), horizontalAlignment = HorizontalAlignment.Right},
+                new Zoom() {Offset = new Vector2(-4, 24), horizontalAlignment = HorizontalAlignment.Right },
+
+                // Bottom Left
+                new ProcessorArchitecture() {Offset = new Vector2(4, -14), verticalAlignment = VerticalAlignment.Bottom},
+                new GraphicsDevice() {Offset = new Vector2(4, -2), verticalAlignment = VerticalAlignment.Bottom},
+                new AssemblyRuntime() {Offset = new Vector2(4, -26), verticalAlignment = VerticalAlignment.Bottom},
+
+                // Bottom Right
             };
             RecalculatePositions();
         }

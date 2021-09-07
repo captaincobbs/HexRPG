@@ -35,7 +35,7 @@ namespace HexRPG.Overlay
 
         private string GetString()
         {
-            return $"CamX,CamY: {ViewPort.Coordinates.X}, {ViewPort.Coordinates.Y}";
+            return $"CAMERA: {CameraManager.TargetCoordinates.X:0.00}, {CameraManager.TargetCoordinates.Y:0.00}";
         }
 
         public void RecalculatePosition(SpriteFont font)
