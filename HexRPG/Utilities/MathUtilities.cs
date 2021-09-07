@@ -46,17 +46,17 @@ namespace HexRPG.Utilities
         /// <param name="min">Constrained minimum value</param>
         /// <param name="max">Constrained maximum value</param>
         /// <returns>Returns value if within constraints, otherwise returns the minimum or maximum</returns>
-        public static float ContainInRange(float value, float min, float max)
+        public static float Clamp(float value, float min, float max)
         {
             return value < min ? min : value > max ? max : value;
         }
 
-        public static float ContainAboveMin(float value, float min)
+        public static float Min(float value, float min)
         {
             return value < min ? min : value;
         }
 
-        public static float ContainBelowMax(float value, float max)
+        public static float Max(float value, float max)
         {
             return value > max ? max : value;
         }

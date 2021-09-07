@@ -1135,13 +1135,13 @@ namespace HexRPG.Entity
                     switch (mapping.mouseActions[i])
                     {
                         case (MouseAction.ScrollIn):
-                            return MathUtilities.ContainInRange(ScrollWheelDistance, -1, 0);
+                            return MathUtilities.Clamp(ScrollWheelDistance, -1, 0);
                         case (MouseAction.ScrollOut):
-                            return -1 * MathUtilities.ContainInRange(ScrollWheelDistance, 0, 1);
+                            return -1 * MathUtilities.Clamp(ScrollWheelDistance, 0, 1);
                         case (MouseAction.HorizontalScrollLeft):
-                            return MathUtilities.ContainInRange(ScrollHorizontalWheelDistance, 0, 1);
+                            return MathUtilities.Clamp(ScrollHorizontalWheelDistance, 0, 1);
                         case (MouseAction.HorizontalScrollRight):
-                            return MathUtilities.ContainInRange(ScrollHorizontalWheelDistance, 1, 0);
+                            return MathUtilities.Clamp(ScrollHorizontalWheelDistance, 1, 0);
                         case (MouseAction.LeftClick):
                             return GameOptions.ScrollSensitivity / 15f;
                         case (MouseAction.RightClick):
