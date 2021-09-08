@@ -24,9 +24,13 @@ namespace HexRPG
         /// </summary>
         public static GraphicsDeviceManager Graphics;
 
+        /// <summary>
+        /// The system window of <see cref="MainGame"/>
+        /// </summary>
+        public static GameWindow GameWindow;
+
         SpriteBatch SpriteBatch;
         MapManager MapManager;
-        public static GameWindow GameWindow;
 
         // Art
         /// <summary>
@@ -112,7 +116,7 @@ namespace HexRPG
         protected override void Draw(GameTime gameTime)
         {
             // Draw Background
-            GraphicsDevice.Clear(GameOptions.BackgroundColor);
+            GraphicsDevice.Clear(Globals.BackgroundColor);
 
             // Draw Game Objects
             SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, CameraManager.Camera);

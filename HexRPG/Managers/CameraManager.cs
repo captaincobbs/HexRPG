@@ -64,7 +64,7 @@ namespace HexRPG.Dynamic
         public static void Update()
         {
             // Apply zoom delta to current zoom value
-            ZoomValue += ((ZoomTarget - ZoomValue) * GameOptions.CameraZoomInertia);
+            ZoomValue += ((ZoomTarget - ZoomValue) * Globals.CameraZoomInertia);
 
             // If camera isn't manually controlled, interporate between target position and current position
             if (CameraFocus.GetType() != typeof(PlayerControlled))
@@ -73,8 +73,8 @@ namespace HexRPG.Dynamic
                     CameraFocus.GetPosition().X,
                     CameraFocus.GetPosition().Y));
                 Coordinates = new Vector2(
-                    Coordinates.X + (TargetCoordinates.X - Coordinates.X) * GameOptions.CameraScrollInertia,
-                    Coordinates.Y + (TargetCoordinates.Y - Coordinates.Y) * GameOptions.CameraScrollInertia);
+                    Coordinates.X + (TargetCoordinates.X - Coordinates.X) * Globals.CameraScrollInertia,
+                    Coordinates.Y + (TargetCoordinates.Y - Coordinates.Y) * Globals.CameraScrollInertia);
             }
             // If camera is manually controlled, watch for input
             else
@@ -85,13 +85,13 @@ namespace HexRPG.Dynamic
             // Scroll In
             if (InputManager.IsActionPressed(InputManager.InputAction.ZoomIn))
             {
-                ZoomTarget += GameOptions.ZoomThreshold * InputManager.GetActionScroll(InputManager.InputAction.ZoomIn);
+                ZoomTarget += Globals.ZoomThreshold * InputManager.GetActionScroll(InputManager.InputAction.ZoomIn);
             }
 
             // Scroll Out
             if (InputManager.IsActionPressed(InputManager.InputAction.ZoomOut))
             {
-                ZoomTarget -= GameOptions.ZoomThreshold * InputManager.GetActionScroll(InputManager.InputAction.ZoomOut);
+                ZoomTarget -= Globals.ZoomThreshold * InputManager.GetActionScroll(InputManager.InputAction.ZoomOut);
             }
 
             // Reset camera zoom
@@ -145,7 +145,7 @@ namespace HexRPG.Dynamic
         /// <returns><see cref="Vector2"/> of the current position of the tracked entity</returns>
         public Vector2 GetPosition()
         {
-            return new Vector2(focusObject.Coordinates.X * GameOptions.TileSize, focusObject.Coordinates.Y * GameOptions.TileSize);
+            return new Vector2(focusObject.Coordinates.X * Globals.TileSize, focusObject.Coordinates.Y * Globals.TileSize);
         }
     }
 

@@ -1,15 +1,15 @@
 ﻿//using HexRPG.Entity;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static HexRPG.Utilities.FileUtilities;
 using HexRPG.Fonts;
 
 namespace HexRPG
 {
-    public static class GameOptions
+    /// <summary>
+    /// Location for storing all global static game variables
+    /// </summary>
+    public static class Globals
     {
         /// <summary>
         /// Pixel size of a tile on the map, tiles wider or taller than this will be placed as normal.

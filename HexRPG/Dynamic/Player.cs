@@ -83,7 +83,7 @@ namespace HexRPG.Entity
         public Player(string Name)
         {
             Coordinates = new Vector2(0, 0);
-            AnimCoordinate = new Vector2(GameOptions.ChunkSize / 2, GameOptions.ChunkSize / 2);
+            AnimCoordinate = new Vector2(Globals.ChunkSize / 2, Globals.ChunkSize / 2);
             this.Name = Name;
             Depth = 1f;
             Image = SpriteAtlas.Player_Down;
@@ -102,8 +102,8 @@ namespace HexRPG.Entity
 
             // Update the animation coordinate to make character slide
             AnimCoordinate = new Vector2(
-            (Coordinates.X - AnimCoordinate.X) * GameOptions.MovementInertiaFactor + AnimCoordinate.X,
-            (Coordinates.Y - AnimCoordinate.Y) * GameOptions.MovementInertiaFactor + AnimCoordinate.Y
+            (Coordinates.X - AnimCoordinate.X) * Globals.MovementInertiaFactor + AnimCoordinate.X,
+            (Coordinates.Y - AnimCoordinate.Y) * Globals.MovementInertiaFactor + AnimCoordinate.Y
             );
 
             // Frame Counting
@@ -250,12 +250,12 @@ namespace HexRPG.Entity
         public void Draw(SpriteBatch spriteBatch)
         {
             Rectangle destRect = new Rectangle(
-               (int)(AnimCoordinate.X * GameOptions.TileSize),
-               (int)(AnimCoordinate.Y * GameOptions.TileSize),
-               GameOptions.TileSize,
-               GameOptions.TileSize);
+               (int)(AnimCoordinate.X * Globals.TileSize),
+               (int)(AnimCoordinate.Y * Globals.TileSize),
+               Globals.TileSize,
+               Globals.TileSize);
 
-            spriteBatch.Draw(TextureIndex.SpriteAtlas, destRect, Image, Color.White, Rotation, new Vector2(GameOptions.TileSize / 2, GameOptions.TileSize / 2), SpriteEffects.None, Depth);
+            spriteBatch.Draw(TextureIndex.SpriteAtlas, destRect, Image, Color.White, Rotation, new Vector2(Globals.TileSize / 2, Globals.TileSize / 2), SpriteEffects.None, Depth);
         }
 
     }

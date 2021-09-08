@@ -284,12 +284,12 @@ namespace HexRPG.Entity
         /// <summary>
         /// Delta in scroll value of the horizontal scroll wheel multiplied by the scroll sensitivity
         /// </summary>
-        private static int ScrollHorizontalWheelDistance { get { return (int)Math.Round(CurrentDeltaHorizontalScrollWheelValue * (GameOptions.ScrollSensitivity / 1000f)); } }
+        private static int ScrollHorizontalWheelDistance { get { return (int)Math.Round(CurrentDeltaHorizontalScrollWheelValue * (Globals.ScrollSensitivity / 1000f)); } }
 
         /// <summary>
         /// Delta in scroll value of the vertical scroll wheel multiplied by the scroll sensitivity
         /// </summary>
-        private static int ScrollWheelDistance { get { return (int)Math.Round(CurrentDeltaScrollWheelValue * (GameOptions.ScrollSensitivity / 1000f)); } }
+        private static int ScrollWheelDistance { get { return (int)Math.Round(CurrentDeltaScrollWheelValue * (Globals.ScrollSensitivity / 1000f)); } }
 
         /// <summary>
         /// Change in horizontal scroll distance since most recent update
@@ -578,22 +578,22 @@ namespace HexRPG.Entity
 
         public static bool IsGamePadLeftStickDownPressed()
         {
-            return (-1f * CurrentGamepadState.ThumbSticks.Left.Y > GameOptions.AnalogSensitivity);
+            return (-1f * CurrentGamepadState.ThumbSticks.Left.Y > Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadLeftStickDownTriggered()
         {
-            return (-1f * CurrentGamepadState.ThumbSticks.Left.Y > GameOptions.AnalogSensitivity) && (-1f * previousGamepadState.ThumbSticks.Left.Y < GameOptions.AnalogSensitivity);
+            return (-1f * CurrentGamepadState.ThumbSticks.Left.Y > Globals.AnalogSensitivity) && (-1f * previousGamepadState.ThumbSticks.Left.Y < Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadLeftStickLeftPressed()
         {
-            return (-1f * CurrentGamepadState.ThumbSticks.Left.X > GameOptions.AnalogSensitivity);
+            return (-1f * CurrentGamepadState.ThumbSticks.Left.X > Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadLeftStickLeftTriggered()
         {
-            return (-1f * CurrentGamepadState.ThumbSticks.Left.X > GameOptions.AnalogSensitivity) && (-1f * previousGamepadState.ThumbSticks.Left.X < GameOptions.AnalogSensitivity);
+            return (-1f * CurrentGamepadState.ThumbSticks.Left.X > Globals.AnalogSensitivity) && (-1f * previousGamepadState.ThumbSticks.Left.X < Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadLeftStickPressed()
@@ -603,12 +603,12 @@ namespace HexRPG.Entity
 
         public static bool IsGamePadLeftStickRightPressed()
         {
-            return (CurrentGamepadState.ThumbSticks.Left.X > GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.ThumbSticks.Left.X > Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadLeftStickRightTriggered()
         {
-            return (CurrentGamepadState.ThumbSticks.Left.X > GameOptions.AnalogSensitivity) && (previousGamepadState.ThumbSticks.Left.X < GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.ThumbSticks.Left.X > Globals.AnalogSensitivity) && (previousGamepadState.ThumbSticks.Left.X < Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadLeftStickTriggered()
@@ -618,22 +618,22 @@ namespace HexRPG.Entity
 
         public static bool IsGamePadLeftStickUpPressed()
         {
-            return (CurrentGamepadState.ThumbSticks.Left.Y > GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.ThumbSticks.Left.Y > Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadLeftStickUpTriggered()
         {
-            return (CurrentGamepadState.ThumbSticks.Left.Y > GameOptions.AnalogSensitivity) && (previousGamepadState.ThumbSticks.Left.Y < GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.ThumbSticks.Left.Y > Globals.AnalogSensitivity) && (previousGamepadState.ThumbSticks.Left.Y < Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadLeftTriggerPressed()
         {
-            return (CurrentGamepadState.Triggers.Left > GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.Triggers.Left > Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadLeftTriggerTriggered()
         {
-            return (CurrentGamepadState.Triggers.Left > GameOptions.AnalogSensitivity) && (previousGamepadState.Triggers.Left < GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.Triggers.Left > Globals.AnalogSensitivity) && (previousGamepadState.Triggers.Left < Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadRightShoulderPressed()
@@ -648,22 +648,22 @@ namespace HexRPG.Entity
 
         public static bool IsGamepadRightStickDownPressed()
         {
-            return (-1f * CurrentGamepadState.ThumbSticks.Right.Y > GameOptions.AnalogSensitivity);
+            return (-1f * CurrentGamepadState.ThumbSticks.Right.Y > Globals.AnalogSensitivity);
         }
 
         public static bool IsGamepadRightStickDownTriggered()
         {
-            return (-1f * CurrentGamepadState.ThumbSticks.Right.Y > GameOptions.AnalogSensitivity) && (-1f * previousGamepadState.ThumbSticks.Right.Y < GameOptions.AnalogSensitivity);
+            return (-1f * CurrentGamepadState.ThumbSticks.Right.Y > Globals.AnalogSensitivity) && (-1f * previousGamepadState.ThumbSticks.Right.Y < Globals.AnalogSensitivity);
         }
 
         public static bool IsGamepadRightStickLeftPressed()
         {
-            return (-1f * CurrentGamepadState.ThumbSticks.Right.X > GameOptions.AnalogSensitivity);
+            return (-1f * CurrentGamepadState.ThumbSticks.Right.X > Globals.AnalogSensitivity);
         }
 
         public static bool IsGamepadRightStickLeftTriggered()
         {
-            return (-1f * CurrentGamepadState.ThumbSticks.Right.X > GameOptions.AnalogSensitivity) && (-1f * previousGamepadState.ThumbSticks.Right.X < GameOptions.AnalogSensitivity);
+            return (-1f * CurrentGamepadState.ThumbSticks.Right.X > Globals.AnalogSensitivity) && (-1f * previousGamepadState.ThumbSticks.Right.X < Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadRightStickPressed()
@@ -673,12 +673,12 @@ namespace HexRPG.Entity
 
         public static bool IsGamepadRightStickRightPressed()
         {
-            return (CurrentGamepadState.ThumbSticks.Right.X > GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.ThumbSticks.Right.X > Globals.AnalogSensitivity);
         }
 
         public static bool IsGamepadRightStickRightTriggered()
         {
-            return (CurrentGamepadState.ThumbSticks.Right.X > GameOptions.AnalogSensitivity) && (previousGamepadState.ThumbSticks.Right.X < GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.ThumbSticks.Right.X > Globals.AnalogSensitivity) && (previousGamepadState.ThumbSticks.Right.X < Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadRightStickTriggered()
@@ -688,22 +688,22 @@ namespace HexRPG.Entity
 
         public static bool IsGamepadRightStickUpPressed()
         {
-            return (CurrentGamepadState.ThumbSticks.Right.Y > GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.ThumbSticks.Right.Y > Globals.AnalogSensitivity);
         }
 
         public static bool IsGamepadRightStickUpTriggered()
         {
-            return (CurrentGamepadState.ThumbSticks.Right.Y > GameOptions.AnalogSensitivity) && (previousGamepadState.ThumbSticks.Right.Y < GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.ThumbSticks.Right.Y > Globals.AnalogSensitivity) && (previousGamepadState.ThumbSticks.Right.Y < Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadRightTriggerPressed()
         {
-            return (CurrentGamepadState.Triggers.Right > GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.Triggers.Right > Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadRightTriggerTriggered()
         {
-            return (CurrentGamepadState.Triggers.Right > GameOptions.AnalogSensitivity) && (previousGamepadState.Triggers.Right < GameOptions.AnalogSensitivity);
+            return (CurrentGamepadState.Triggers.Right > Globals.AnalogSensitivity) && (previousGamepadState.Triggers.Right < Globals.AnalogSensitivity);
         }
 
         public static bool IsGamePadStartPressed()
@@ -1122,7 +1122,7 @@ namespace HexRPG.Entity
                 if (IsKeyPressed(mapping.keyboardKeys[i]))
                 {
                     LastUsedInput = InputType.Keyboard;
-                    return GameOptions.ScrollSensitivity / GameOptions.InputSensitivity;
+                    return Globals.ScrollSensitivity / Globals.InputSensitivity;
                 }
             }
 
@@ -1131,7 +1131,7 @@ namespace HexRPG.Entity
                 if (IsGamePadButtonPressed(mapping.gamePadButtons[i]))
                 {
                     LastUsedInput = InputType.GamePad;
-                    return GameOptions.ScrollSensitivity / GameOptions.ScrollSensitivity / 2;
+                    return Globals.ScrollSensitivity / Globals.ScrollSensitivity / 2;
                 }
             }
 
@@ -1151,11 +1151,11 @@ namespace HexRPG.Entity
                         case (MouseAction.HorizontalScrollRight):
                             return MathUtilities.Clamp(ScrollHorizontalWheelDistance, 1, 0);
                         case (MouseAction.LeftClick):
-                            return GameOptions.ScrollSensitivity / 15f;
+                            return Globals.ScrollSensitivity / 15f;
                         case (MouseAction.RightClick):
-                            return GameOptions.ScrollSensitivity / 15f;
+                            return Globals.ScrollSensitivity / 15f;
                         case (MouseAction.MiddleClick):
-                            return GameOptions.ScrollSensitivity / 15f;
+                            return Globals.ScrollSensitivity / 15f;
                     }
                 }
             }

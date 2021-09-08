@@ -38,7 +38,7 @@ namespace HexRPG.Overlay
         {
             foreach (IDebugOverlayItem item in DebugOverlayItems)
             {
-                item.RecalculatePosition(MainGame.FontSet[GameOptions.ForegroundFont]);
+                item.RecalculatePosition(MainGame.FontSet[Globals.ForegroundFont]);
             }
         }
 
@@ -59,7 +59,7 @@ namespace HexRPG.Overlay
             {
                 foreach (IDebugOverlayItem item in DebugOverlayItems)
                 {
-                    item.Draw(spriteBatch, MainGame.FontSet[GameOptions.ForegroundFont], GameOptions.ForegroundColor);
+                    item.Draw(spriteBatch, MainGame.FontSet[Globals.ForegroundFont], Globals.ForegroundColor);
                 }
                 RecalculatePositions();
             }
