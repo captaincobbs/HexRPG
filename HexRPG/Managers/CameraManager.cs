@@ -1,12 +1,6 @@
 ﻿using HexRPG.Entity;
 using HexRPG.Utilities;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using HexRPG.Overlay;
-using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace HexRPG.Dynamic
@@ -53,12 +47,20 @@ namespace HexRPG.Dynamic
         static float minCamZoom = 0.75f;
 
 
+        /// <summary>
+        /// Prepares the camera to update each frame
+        /// </summary>
+        /// <param name="cameraFocus">Current focus of the camera</param>
+        /// <param name="viewPort">View bounds for player<inheritdoc/></param>
         public static void Initialize(IFocusObject cameraFocus, Viewport viewPort)
         {
             CameraFocus = cameraFocus;
             Viewport = viewPort;
         }
 
+        /// <summary>
+        /// Runs once per tick, runs camera movement logic
+        /// </summary>
         public static void Update()
         {
             // Apply zoom delta to current zoom value
