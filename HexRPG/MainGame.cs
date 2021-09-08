@@ -7,7 +7,6 @@ using HexRPG.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using static HexRPG.Utilities.FileUtilities;
 using HexRPG.Overlay;
 
 namespace HexRPG

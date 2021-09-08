@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SpriteFontPlus;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace HexRPG.Fonts
 {

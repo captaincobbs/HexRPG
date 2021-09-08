@@ -1,10 +1,6 @@
 ﻿using HexRPG.Dynamic;
-using HexRPG.Overlay;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static HexRPG.Utilities.UIUtilities;
 
 namespace HexRPG.Overlay
@@ -35,7 +31,7 @@ namespace HexRPG.Overlay
 
         private string GetString()
         {
-            return $"CAMERA: {CameraManager.TargetCoordinates.X:0.00}, {CameraManager.TargetCoordinates.Y:0.00}";
+            return $"CAMERA: {CameraManager.TargetCoordinates.X:0}, {CameraManager.TargetCoordinates.Y:0}";
         }
 
         public void RecalculatePosition(SpriteFont font)

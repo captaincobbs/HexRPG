@@ -1,12 +1,7 @@
 ﻿using HexRPG.Dynamic;
 using HexRPG.Sprite;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json;
-using System;
-using System.Diagnostics;
 using static HexRPG.Entity.InputManager;
 
 namespace HexRPG.Entity
@@ -79,7 +74,7 @@ namespace HexRPG.Entity
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        public bool IsEntity { get; } = true;
+        public bool IsEntity { get; set;  } = true;
 
         /// <summary>
         /// Constructor for a player instance
