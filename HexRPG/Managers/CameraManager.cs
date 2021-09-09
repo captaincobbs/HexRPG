@@ -7,6 +7,7 @@ namespace HexRPG.Dynamic
 {
     public static class CameraManager
     {
+        #region Camera
         /// <summary>
         /// Matrix of CameraManager used for rendering
         /// </summary>
@@ -110,6 +111,7 @@ namespace HexRPG.Dynamic
                 Matrix.CreateTranslation(new Vector3(MainGame.GameWindow.ClientBounds.Width * 0.5f, MainGame.GameWindow.ClientBounds.Height * 0.5f, 0));
         }
     }
+    #endregion
 
     #region Focus Objects
     /// <summary>
