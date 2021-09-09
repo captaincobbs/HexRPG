@@ -382,7 +382,7 @@ namespace HexRPG.Utilities
                     }
 
                     LogUtilities.Log(ex, str.ToString());
-                    System.Windows.Forms.MessageBox.Show(str.ToString());
+                    MessageBox.Show(str.ToString());
                 }
             }
 
