@@ -45,7 +45,6 @@ namespace HexRPG
         {
             // Create main game variables
             Graphics = new GraphicsDeviceManager(this);
-            HardwareUtilities.GraphicsDevice = Graphics;
             Content.RootDirectory = "Content";
             Player = new Player("");
             GameWindow = Window;
