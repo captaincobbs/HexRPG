@@ -7,6 +7,9 @@ namespace HexRPG.Utilities
 {
     public static class UIUtilities
     {
+        /// <summary>
+        /// Enumerates the different types of horiziontal edge alignment
+        /// </summary>
         public enum HorizontalAlignment
         {
             Left,
@@ -14,6 +17,9 @@ namespace HexRPG.Utilities
             Center
         }
 
+        /// <summary>
+        /// Enumerates the different types of vertical edge alignment
+        /// </summary>
         public enum VerticalAlignment
         {
             Top,

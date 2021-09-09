@@ -7,10 +7,17 @@ namespace HexRPG.Overlay
 {
     public static class DebugOverlay
     {
+        /// <summary>
+        /// Whether the debug overlay is allowed to be rendered or not, default false
+        /// </summary>
         public static bool IsVisible { get; set; } = false;
 
+        // All debug overlay items
         private static List<IDebugOverlayItem> DebugOverlayItems;
 
+        /// <summary>
+        /// Creates all <see cref="IDebugOverlayItem"/>s and determines their initial positions
+        /// </summary>
         public static void Initialize()
         {
             DebugOverlayItems = new List<IDebugOverlayItem>()
@@ -34,6 +41,9 @@ namespace HexRPG.Overlay
             RecalculatePositions();
         }
 
+        /// <summary>
+        /// Recalculates the position of all active <see cref="IDebugOverlayItem"/>s when the screen size is changed
+        /// </summary>
         public static void RecalculatePositions()
         {
             foreach (IDebugOverlayItem item in DebugOverlayItems)
@@ -42,6 +52,10 @@ namespace HexRPG.Overlay
             }
         }
 
+        /// <summary>
+        /// Runs on-tick update logic for each <see cref="IDebugOverlayItem"/>
+        /// </summary>
+        /// <param name="gameTime">Most recent time state of <see cref="MainGame"/></param>
         public static void Update(GameTime gameTime)
         {
             if (IsVisible)
@@ -53,6 +67,10 @@ namespace HexRPG.Overlay
             }
         }
 
+        /// <summary>
+        /// Calls each <see cref="IDebugOverlayItem"/> to render itself
+        /// </summary>
+        /// <param name="spriteBatch">Most recent <see cref="SpriteBatch"/></param>
         public static void Draw(SpriteBatch spriteBatch)
         {
             if (IsVisible)
