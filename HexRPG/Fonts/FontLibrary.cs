@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using SpriteFontPlus;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace HexRPG.Fonts
 {
@@ -11,7 +8,7 @@ namespace HexRPG.Fonts
     {
         public static SpriteFont Battlenet(GraphicsDevice graphicsDevice)
         {
-            TtfFontBakerResult battlenet = (TtfFontBaker.Bake(File.ReadAllBytes("./Content/Fonts/Battlenet.ttf"),
+            TtfFontBakerResult battlenet = TtfFontBaker.Bake(File.ReadAllBytes("./Content/Fonts/Battlenet.ttf"),
                 14,
                 1024,
                 1024,
@@ -19,7 +16,7 @@ namespace HexRPG.Fonts
                 {
                     CharacterRange.BasicLatin
                 }
-            ));
+            );
 
             return battlenet.CreateSpriteFont(graphicsDevice);
                 

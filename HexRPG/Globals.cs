@@ -1,15 +1,15 @@
 ﻿//using HexRPG.Entity;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static HexRPG.Utilities.FileUtilities;
 using HexRPG.Fonts;
 
 namespace HexRPG
 {
-    public static class GameOptions
+    /// <summary>
+    /// Location for storing all global static game variables
+    /// </summary>
+    public static class Globals
     {
         /// <summary>
         /// Pixel size of a tile on the map, tiles wider or taller than this will be placed as normal.
@@ -19,7 +19,7 @@ namespace HexRPG
         /// <summary>
         /// Inertia rate of the camera when scrolling
         /// </summary>
-        public const float CameraScrollInertia = 0.08f;
+        public const float CameraScrollInertia = 0.04f;
 
         /// <summary>
         /// Inertia rate of the camera when zooming
@@ -34,7 +34,7 @@ namespace HexRPG
         /// <summary>
         /// Length of a chunk in tiles
         /// </summary>
-        public const int ChunkSize = 20;
+        public const int ChunkSize = 10;
 
         /// <summary>
         /// Color of the game background when no content blocks it
@@ -71,6 +71,9 @@ namespace HexRPG
         /// </summary>
         public const float ZoomThreshold = 0.75f;
 
+        /// <summary>
+        /// Determines the format in which user files will be exported as
+        /// </summary>
         public readonly static SaveType SaveType = SaveType.JSON;
     }
 }

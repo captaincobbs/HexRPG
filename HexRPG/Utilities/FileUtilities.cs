@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Newtonsoft.Json;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
@@ -384,7 +382,7 @@ namespace HexRPG.Utilities
                     }
 
                     LogUtilities.Log(ex, str.ToString());
-                    System.Windows.Forms.MessageBox.Show(str.ToString());
+                    MessageBox.Show(str.ToString());
                 }
             }
 
