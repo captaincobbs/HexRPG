@@ -19,7 +19,7 @@ namespace HexRPG
         /// <summary>
         /// Inertia rate of the camera when scrolling
         /// </summary>
-        public const float CameraScrollInertia = 0.04f;
+        public const float CameraScrollInertia = 0.07f;
 
         /// <summary>
         /// Inertia rate of the camera when zooming
@@ -34,7 +34,7 @@ namespace HexRPG
         /// <summary>
         /// Length of a chunk in tiles
         /// </summary>
-        public const int ChunkSize = 10;
+        public const int ChunkSize = 5;
 
         /// <summary>
         /// Color of the game background when no content blocks it
@@ -69,7 +69,7 @@ namespace HexRPG
         /// <summary>
         /// Determines the amount of "zoom" applied to the camera per scroll action
         /// </summary>
-        public const float ZoomThreshold = 0.75f;
+        public const float ZoomThreshold = 0.5f;
 
         /// <summary>
         /// Determines the format in which user files will be exported as

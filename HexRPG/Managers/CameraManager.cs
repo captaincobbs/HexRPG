@@ -44,8 +44,8 @@ namespace HexRPG.Dynamic
         /// </summary>
         public static Viewport Viewport { get; set; }
 
-        static float maxCamZoom = 10f;
-        static float minCamZoom = 0.75f;
+        static float maxCamZoom = 8f;
+        static float minCamZoom = 0.5f;
 
 
         /// <summary>
