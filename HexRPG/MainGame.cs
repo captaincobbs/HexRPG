@@ -99,12 +99,13 @@ namespace HexRPG
 
             // Secondary Updates
             Player.Update();
+            EntityManager.Update();
             CameraManager.Update();
 
             // Main Updates
             InputManager.Update(IsActive, Exit);
             DebugOverlay.Update(gameTime);
-            WorldManager.UpdateChunkRange(gameTime, WorldManager.GetAreaFromPlayer(Player));
+            WorldManager.UpdateChunkRange(gameTime, WorldManager.GetAreaAroundFocus(CameraManager.CameraFocus));
 
             base.Update(gameTime);
         }
@@ -120,11 +121,13 @@ namespace HexRPG
 
             // Draw Tiles
             SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, null);
-            WorldManager.DrawChunkRange(gameTime, WorldManager.GetAreaFromPlayer(Player));
+            WorldManager.DrawChunkRange(gameTime, WorldManager.GetAreaAroundFocus(CameraManager.CameraFocus));
+            SpriteBatch.End();
 
             // Draw Game Objects
             SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, CameraManager.Camera);
             Player.Draw(SpriteBatch);
+            EntityManager.Draw(gameTime, SpriteBatch);
             SpriteBatch.End();
 
             // Draw Overlay
