@@ -10,7 +10,12 @@ namespace HexRPG.Overlay
         /// <summary>
         /// Whether the debug overlay is allowed to be rendered or not, default false
         /// </summary>
-        public static bool IsVisible { get; set; } = false;
+        public static bool IsDiagnosticsVisible { get; set; } = false;
+
+        /// <summary>
+        /// Whether the grid overlay is visible
+        /// </summary>
+        public static bool IsGridVisible { get; set; } = false;
 
         // All debug overlay items
         private static List<IDebugOverlayItem> DebugOverlayItems;
@@ -58,7 +63,7 @@ namespace HexRPG.Overlay
         /// <param name="gameTime">Most recent time state of <see cref="MainGame"/></param>
         public static void Update(GameTime gameTime)
         {
-            if (IsVisible)
+            if (IsDiagnosticsVisible)
             {
                 foreach (IDebugOverlayItem item in DebugOverlayItems)
                 {
@@ -73,7 +78,7 @@ namespace HexRPG.Overlay
         /// <param name="spriteBatch">Most recent <see cref="SpriteBatch"/></param>
         public static void Draw(SpriteBatch spriteBatch)
         {
-            if (IsVisible)
+            if (IsDiagnosticsVisible)
             {
                 foreach (IDebugOverlayItem item in DebugOverlayItems)
                 {
@@ -82,6 +87,10 @@ namespace HexRPG.Overlay
                 RecalculatePositions();
             }
 
+            if (IsGridVisible)
+            {
+
+            }
         }
     }
 }
