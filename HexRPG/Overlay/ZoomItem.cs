@@ -1,14 +1,15 @@
-﻿using HexRPG.Utilities;
+﻿using HexRPG.Dynamic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using static HexRPG.Utilities.UIUtilities;
 
 namespace HexRPG.Overlay
 {
-    public class ProcessorArchitecture : IDebugOverlayItem
+    /// <summary>
+    /// <see cref="IDebugOverlayItem"/> that displays current / target zoom level.
+    /// </summary>
+    public class ZoomItem : IDebugOverlayItem
     {
         /// <summary>
         /// <inheritdoc/>
@@ -30,7 +31,10 @@ namespace HexRPG.Overlay
         /// </summary>
         public VerticalAlignment verticalAlignment { get; set; } = VerticalAlignment.Top;
 
-        public ProcessorArchitecture()
+        /// <summary>
+        /// <see cref="IDebugOverlayItem"/> that displays current / target zoom level.
+        /// </summary>
+        public ZoomItem()
         {
 
         }
@@ -41,6 +45,7 @@ namespace HexRPG.Overlay
         /// <param name="gameTime"><inheritdoc/></param>
         public void Update(GameTime gameTime)
         {
+
         }
 
         /// <summary>
@@ -60,7 +65,7 @@ namespace HexRPG.Overlay
         /// <returns>Returns formatted label text</returns>
         private string GetString()
         {
-            return $"CPU: {HardwareUtilities.GetChipSetName()}";
+            return $"ZOOM: {Math.Round(CameraManager.ZoomValue, 2):0.00} / {CameraManager.ZoomTarget:0.00}";
         }
 
         /// <summary>

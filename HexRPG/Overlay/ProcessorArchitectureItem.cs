@@ -1,10 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HexRPG.Utilities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using static HexRPG.Utilities.UIUtilities;
 
 namespace HexRPG.Overlay
 {
-    public class Coordinate : IDebugOverlayItem
+    public class ProcessorArchitectureItem : IDebugOverlayItem
     {
         /// <summary>
         /// <inheritdoc/>
@@ -26,7 +30,7 @@ namespace HexRPG.Overlay
         /// </summary>
         public VerticalAlignment verticalAlignment { get; set; } = VerticalAlignment.Top;
 
-        public Coordinate()
+        public ProcessorArchitectureItem()
         {
 
         }
@@ -56,7 +60,7 @@ namespace HexRPG.Overlay
         /// <returns>Returns formatted label text</returns>
         private string GetString()
         {
-            return $"PLAYER: {MainGame.Player.Coordinates.X}, {MainGame.Player.Coordinates.Y}";
+            return $"CPU: {HardwareUtilities.GetChipSetName()}";
         }
 
         /// <summary>
@@ -74,6 +78,16 @@ namespace HexRPG.Overlay
                     break;
                 case HorizontalAlignment.Right:
                     x += HorizontalAlignRight(new Rectangle(0, 0, MainGame.GameWindow.ClientBounds.Width, MainGame.GameWindow.ClientBounds.Height), font.MeasureString(GetString()));
+                    break;
+            }
+
+            switch (verticalAlignment)
+            {
+                case VerticalAlignment.Center:
+                    y += VerticalAlignCenter(new Rectangle(0, 0, MainGame.GameWindow.ClientBounds.Width, MainGame.GameWindow.ClientBounds.Height), font.MeasureString(GetString()));
+                    break;
+                case VerticalAlignment.Bottom:
+                    y += VerticalAlignBottom(new Rectangle(0, 0, MainGame.GameWindow.ClientBounds.Width, MainGame.GameWindow.ClientBounds.Height), font.MeasureString(GetString()));
                     break;
             }
 

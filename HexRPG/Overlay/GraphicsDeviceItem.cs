@@ -8,7 +8,7 @@ using static HexRPG.Utilities.UIUtilities;
 
 namespace HexRPG.Overlay
 {
-    public class GraphicsDevice : IDebugOverlayItem
+    public class GraphicsDeviceItem : IDebugOverlayItem
     {
         /// <summary>
         /// <inheritdoc/>
@@ -30,7 +30,7 @@ namespace HexRPG.Overlay
         /// </summary>
         public VerticalAlignment verticalAlignment { get; set; } = VerticalAlignment.Top;
 
-        public GraphicsDevice()
+        public GraphicsDeviceItem()
         {
 
         }

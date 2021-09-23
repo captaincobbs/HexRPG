@@ -1,14 +1,10 @@
-﻿using HexRPG.Utilities;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using static HexRPG.Utilities.UIUtilities;
 
 namespace HexRPG.Overlay
 {
-    /// <summary>
-    /// <see cref="IDebugOverlayItem"/> that displays the current C#.NET Version
-    /// </summary>
-    class AssemblyRuntime : IDebugOverlayItem
+    public class CoordinateItem : IDebugOverlayItem
     {
         /// <summary>
         /// <inheritdoc/>
@@ -30,10 +26,7 @@ namespace HexRPG.Overlay
         /// </summary>
         public VerticalAlignment verticalAlignment { get; set; } = VerticalAlignment.Top;
 
-        /// <summary>
-        /// <see cref="IDebugOverlayItem"/> that displays the current C#.NET Version
-        /// </summary>
-        public AssemblyRuntime()
+        public CoordinateItem()
         {
 
         }
@@ -63,7 +56,7 @@ namespace HexRPG.Overlay
         /// <returns>Returns formatted label text</returns>
         private string GetString()
         {
-            return $"C#.NET: {HardwareUtilities.GetAssemblyRuntimeVersion()}";
+            return $"PLAYER: {MainGame.Player.Coordinates.X}, {MainGame.Player.Coordinates.Y}";
         }
 
         /// <summary>

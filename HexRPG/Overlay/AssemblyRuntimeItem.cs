@@ -1,11 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HexRPG.Utilities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using static HexRPG.Utilities.UIUtilities;
 
 namespace HexRPG.Overlay
 {
-    public class FPS : IDebugOverlayItem
+    /// <summary>
+    /// <see cref="IDebugOverlayItem"/> that displays the current C#.NET Version
+    /// </summary>
+    class AssemblyRuntimeItem : IDebugOverlayItem
     {
         /// <summary>
         /// <inheritdoc/>
@@ -27,10 +30,12 @@ namespace HexRPG.Overlay
         /// </summary>
         public VerticalAlignment verticalAlignment { get; set; } = VerticalAlignment.Top;
 
-        private float totalSeconds { get; set; }
-
-        public FPS()
+        /// <summary>
+        /// <see cref="IDebugOverlayItem"/> that displays the current C#.NET Version
+        /// </summary>
+        public AssemblyRuntimeItem()
         {
+
         }
 
         /// <summary>
@@ -39,7 +44,6 @@ namespace HexRPG.Overlay
         /// <param name="gameTime"><inheritdoc/></param>
         public void Update(GameTime gameTime)
         {
-            totalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         /// <summary>
@@ -59,7 +63,7 @@ namespace HexRPG.Overlay
         /// <returns>Returns formatted label text</returns>
         private string GetString()
         {
-            return $"FPS: {Math.Round(1 / totalSeconds):0}";
+            return $"C#.NET: {HardwareUtilities.GetAssemblyRuntimeVersion()}";
         }
 
         /// <summary>
@@ -77,6 +81,16 @@ namespace HexRPG.Overlay
                     break;
                 case HorizontalAlignment.Right:
                     x += HorizontalAlignRight(new Rectangle(0, 0, MainGame.GameWindow.ClientBounds.Width, MainGame.GameWindow.ClientBounds.Height), font.MeasureString(GetString()));
+                    break;
+            }
+
+            switch (verticalAlignment)
+            {
+                case VerticalAlignment.Center:
+                    y += VerticalAlignCenter(new Rectangle(0, 0, MainGame.GameWindow.ClientBounds.Width, MainGame.GameWindow.ClientBounds.Height), font.MeasureString(GetString()));
+                    break;
+                case VerticalAlignment.Bottom:
+                    y += VerticalAlignBottom(new Rectangle(0, 0, MainGame.GameWindow.ClientBounds.Width, MainGame.GameWindow.ClientBounds.Height), font.MeasureString(GetString()));
                     break;
             }
 
