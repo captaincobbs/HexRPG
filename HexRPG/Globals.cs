@@ -37,6 +37,11 @@ namespace HexRPG
         public const int ChunkSize = 5;
 
         /// <summary>
+        /// How many chunks are rendered in any direction near the player
+        /// </summary>
+        public const int ChunkLimit = 5;
+
+        /// <summary>
         /// Color of the game background when no content blocks it
         /// </summary>
         public static readonly Color BackgroundColor = Color.Black;
@@ -50,6 +55,11 @@ namespace HexRPG
         /// Index of <see cref="SpriteFont"/> in <see cref="FontLibrary"/> to be used for debug text
         /// </summary>
         public const int ForegroundFont = 0;
+
+        /// <summary>
+        /// Color of the debug overlay grid
+        /// </summary>
+        public static readonly Color GridColor = Color.Red;
 
         /// <summary>
         /// Determines the sensitivity of horizontal and vertical scrolling mappings, smaller numbers means more sensitivity.
