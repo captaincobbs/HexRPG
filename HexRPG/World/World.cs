@@ -11,13 +11,24 @@ namespace HexRPG.World
 {
     public class World
     {
-        public Chunk[,] Chunks { get; set; }
-        public int worldSize { get; set; }
-        public List<Chunk> dirtyChunks { get; set; }
+        /// <summary>
+        /// Array of chunks centered around the player that are currently loaded
+        /// </summary>
+        public Rectangle ActiveChunks { get; set; }
 
-        public World()
+        /// <summary>
+        /// The name given to the world by the player
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// List of chunks with changed data that will be saved next time there is a save call
+        /// </summary>
+        private List<Chunk> dirtyChunks { get; set; }
+
+        public World(string name)
         {
-
+            Name = name;
         }
 
         public Tile GetTile(Vector2 coordinates, bool forceLoad)
