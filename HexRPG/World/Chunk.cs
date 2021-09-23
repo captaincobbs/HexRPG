@@ -51,10 +51,10 @@ namespace HexRPG.World
             return "";
         }
 
-        public static Tuple<int, int> GetCoordinatesFromPath(Vector2 coordinates, string directory)
+        public static Vector2 GetCoordinatesFromPath(string directory)
         {
-            Tuple<int, int> tuple = new Tuple<int, int>(0, 0);
-            return tuple;
+            Vector2 vector = new Vector2(0, 0);
+            return vector;
         }
 
         public static Chunk LoadChunk(string filePath)
