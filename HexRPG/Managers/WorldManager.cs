@@ -1,4 +1,6 @@
-﻿using HexRPG.Entity;
+﻿using HexRPG.Dynamic;
+using HexRPG.Entity;
+using HexRPG.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -15,17 +17,33 @@ namespace HexRPG.Managers
 
         public static void Initialize()
         {
+            CreateWord("Test-1");
+        }
 
+        public static void UpdateActiveChunks(Rectangle area)
+        {
+            World.ActiveChunks = area;
         }
 
         public static void UpdateChunkRange(GameTime gameTime, Rectangle area)
         {
-            
+            for (int x = World.ActiveChunks.X; x < World.ActiveChunks.X + World.ActiveChunks.Width; x++)
+            {
+                for (int y = World.ActiveChunks.Y; y < World.ActiveChunks.Y + World.ActiveChunks.Height; y++)
+                {
+
+                }
+            }
         }
 
         public static void DrawChunkRange(GameTime gameTime, Rectangle area)
         {
 
+        }
+
+        public static void CreateWord(string name)
+        {
+            World = new World.World(name);
         }
 
         public static void Save()
@@ -38,9 +56,13 @@ namespace HexRPG.Managers
             return null;
         }
 
-        public static Rectangle GetAreaFromPlayer(Player player)
+        public static Rectangle GetAreaAroundFocus(IFocusObject focus)
         {
-            return new Rectangle((int)player.Coordinates.X - Globals.ChunkLimit, (int)player.Coordinates.Y - Globals.ChunkLimit, (int)player.Coordinates.X + Globals.ChunkLimit, (int)player.Coordinates.Y + Globals.ChunkLimit);
+            return new Rectangle(
+                (int)focus.GetPosition().X - Globals.ChunkLimit,
+                (int)focus.GetPosition().Y - Globals.ChunkLimit,
+                (int)focus.GetPosition().X + Globals.ChunkLimit,
+                (int)focus.GetPosition().Y + Globals.ChunkLimit);
         }
     }
 }
