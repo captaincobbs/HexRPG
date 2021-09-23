@@ -1,7 +1,7 @@
-﻿using HexRPG.Utilities;
-using System;
+﻿using HexRPG.Dynamic;
+using HexRPG.Utilities;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace HexRPG.World
 {
@@ -10,33 +10,10 @@ namespace HexRPG.World
     /// </summary>
     public class Tile
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        private PointF points;
+        public Vector2 Coordinates { get; set; }
 
-        private float side;
+        public Vector2 ChunkCoordinates { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private float h;
-
-        private float r;
-
-        private HexOrientation orientation;
-
-        private float x;
-
-        private float y;
-    }
-
-    /// <summary>
-    /// Determines whether the bottom of the hexagon is a point, or the bottom of the hexagon is flat
-    /// </summary>
-    public enum HexOrientation
-    {
-        Flat = 0,
-        Pointed = 1,
+        public List<IEntity> Entities { get; set; } = new List<IEntity>();
     }
 }
