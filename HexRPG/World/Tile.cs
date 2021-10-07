@@ -16,6 +16,6 @@ namespace HexRPG.World
 
         public List<IEntity> Entities { get; set; } = new List<IEntity>();
 
-        public Biome Biome { get; set; }
+        public BiomeType Biome { get; set; }
     }
 }
