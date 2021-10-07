@@ -4,7 +4,8 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static HexRPG.Utilities.FileUtilities;
+using HexRPG.Utilities;
+using HexRPG.World;
 
 namespace HexRPG.Generation
 {
@@ -13,17 +14,24 @@ namespace HexRPG.Generation
     /// </summary>
     public static class MapGenerator
     {
-        public static Tile[,] Generate(Vector2 size, int side, int seed)
+        public static GeneratorUtilities RNG = new GeneratorUtilities();
+
+        public static Tile[,] Generate(Vector2 size, int seed)
         {
-            float h = MathUtilities.CalculateH(side);
-            float r = MathUtilities.CalculateR(side);
+            RNG.SetNoiseType(GeneratorUtilities.NoiseType.OpenSimplex2);
+            RNG.SetSeed(seed);
+            Tile[,] Tiles = new Tile[(int)size.X, (int)size.Y];
 
-            Vector2 PixelSize = new Vector2(size.X * Globals.TileSize, size.Y * Globals.TileSize);
-            Vector2 hexSize = new Vector2(side + h, r + r);
-            PixelSize = new Vector2((size.X * hexSize.X) + h, (size.Y * hexSize.Y) + r);
+            for (int x = 0; x < size.X; x++)
+            {
+                for (int y = 0; y < size.Y; y++)
+                {
+                    float noise = RNG.GetNoise(x, y);
+                    
+                }
+            }
 
-
-            return new Tile[(int)size.Y, (int)size.X];
+            return Tiles;
         }
     }
 }
