@@ -15,5 +15,7 @@ namespace HexRPG.World
         public Vector2 ChunkCoordinates { get; set; }
 
         public List<IEntity> Entities { get; set; } = new List<IEntity>();
+
+        public Biome Biome { get; set; }
     }
 }
