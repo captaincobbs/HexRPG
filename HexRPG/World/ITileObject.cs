@@ -4,7 +4,8 @@ using System.Text;
 
 namespace HexRPG.World
 {
-    interface ITileObject
+    public interface ITileObject
     {
+
     }
 }
