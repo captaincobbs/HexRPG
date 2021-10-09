@@ -1,12 +1,7 @@
 ﻿using HexRPG.Dynamic;
-using HexRPG.Entity;
 using HexRPG.World;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using HexRPG.World;
 
 // TODO - Fast way to do tile lookups without needing cos/sin to avoid lag
 
@@ -24,7 +19,7 @@ namespace HexRPG.Managers
         public static void Initialize()
         {
 
-            World = new World.World("Test", new Random().Next(100000000));
+            World = new World.World("Test", (uint)new Random().Next(100000000));
         }
 
         public static void UpdateChunkRange(GameTime gameTime, Rectangle area)
@@ -53,11 +48,6 @@ namespace HexRPG.Managers
             }
         }
 
-        public static void CreateWord(string name)
-        {
-            World = new World.World(name);
-        }
-
         public static void Save()
         {
             World.Save();
@@ -75,6 +65,11 @@ namespace HexRPG.Managers
                 (int)focus.GetPosition().Y - Globals.ChunkLimit,
                 (int)focus.GetPosition().X + Globals.ChunkLimit,
                 (int)focus.GetPosition().Y + Globals.ChunkLimit);
+        }
+
+        public static Tile GetCameraFocusTile()
+        {
+            throw new NotImplementedException();
         }
     }
 }
