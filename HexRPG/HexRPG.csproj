@@ -53,6 +53,7 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Spritesheets\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
