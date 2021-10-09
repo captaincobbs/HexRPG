@@ -1,19 +1,29 @@
-﻿using HexRPG.Utilities;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using static HexRPG.Utilities.FileUtilities;
 
 namespace HexRPG.World
 {
     public class Chunk
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int[,] Tiles { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         Dictionary<(int, int), ITileObject> TileObjects { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         bool isLoaded = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
         Vector2 Coordinates { get; set; }
 
         public Chunk()
