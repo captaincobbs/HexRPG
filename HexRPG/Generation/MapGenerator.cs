@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using HexRPG.Utilities;
 using HexRPG.World;
+using static HexRPG.World.Biome;
 
 namespace HexRPG.Generation
 {
@@ -16,7 +17,7 @@ namespace HexRPG.Generation
     {
         public static GeneratorUtilities RNG = new GeneratorUtilities();
 
-        public static Tile[,] Generate(Vector2 size, int seed)
+        public static Tile[,] Generate(Vector2 size, Vector2 chunkCoordinates, int seed)
         {
             RNG.SetNoiseType(GeneratorUtilities.NoiseType.OpenSimplex2);
             RNG.SetSeed(seed);
@@ -26,12 +27,19 @@ namespace HexRPG.Generation
             {
                 for (int y = 0; y < size.Y; y++)
                 {
-                    float noise = RNG.GetNoise(x, y);
-                    
+                    Vector2 position = new Vector2(x, y);
+                    Tiles[x, y].ChunkCoordinates = chunkCoordinates;
+                    Tiles[x, y].Coordinates = position;
+                    Tiles[x, y].Biome = GenerateBiome(position);
                 }
             }
 
             return Tiles;
+        }
+
+        public static BiomeType GenerateBiome(Vector2 position)
+        {
+            return BiomeType.Plains;
         }
     }
 }
