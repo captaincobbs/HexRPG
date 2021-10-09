@@ -16,6 +16,10 @@ namespace HexRPG.World
         public Vector2 ChunkCoordinates { get; set; }
 
         public BiomeType Biome { get; set; }
+        public Element Element { get; set; } = 0;
+        public int Fertility { get; set; } = 0;
+        public int Richness { get; set; } = 0;
+        public int Danger { get; set; } = 0;
 
         public Tile()
         {
