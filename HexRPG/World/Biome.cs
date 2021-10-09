@@ -10,12 +10,5 @@ namespace HexRPG.World
         {
             return BiomeType.Ocean;
         }
-
-        public enum BiomeType
-        {
-            Ocean =  0,
-            Plains = 1,
-            Desert = 2,
-        }
     }
 }
