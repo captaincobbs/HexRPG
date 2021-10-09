@@ -3,6 +3,7 @@ using HexRPG.Utilities;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using static HexRPG.Utilities.FileUtilities;
@@ -31,28 +32,39 @@ namespace HexRPG.World
         /// </summary>
         private List<Chunk> dirtyChunks { get; set; }
 
-        private uint _seed { get; set; }
+        /// <summary>
+        /// Seed used for this world's noise generator
+        /// </summary>
+        private uint seed { get; set; }
 
         /// <summary>
         /// Seed used for this world's noise generator
         /// </summary>
-        public uint Seed { get { return _seed; } }
+        public uint Seed { get { return seed; } }
 
         /// <summary>
         /// Creates an instance of the <see cref="World"/> type, which initializes the area around the player
         /// </summary>
         /// <param name="name">The user-defined name of the world, used for ingame display and for determining filepath</param>
-        public World(string name)
+        public World(string Name, uint seed)
         {
-            Name = name;
+            this.Name = Name;
+            this.seed = seed;
+            Chunks = new Chunk[Globals.ChunkLimit + Globals.ChunkLimit + 1, Globals.ChunkLimit + Globals.ChunkLimit + 1];
 
+            int yi = 0;
             for (int y = -Globals.ChunkLimit + (int)MainGame.Player.Coordinates.Y; y <= Globals.ChunkLimit + MainGame.Player.Coordinates.Y; y++)
             {
+                int xi = 0;
                 for (int x = -Globals.ChunkLimit + (int)MainGame.Player.Coordinates.X; x <= Globals.ChunkLimit + MainGame.Player.Coordinates.X; x++)
                 {
-                    Chunks[x, y] = new Chunk();
+                    Chunks[xi, yi] = new Chunk();
+                    xi += 1;
                 }
+                yi += 1;
             }
+
+            Debug.WriteLine($"{Chunks.GetLength(0)}, {Chunks.GetLength(1)}");
         }
 
         /// <summary>
@@ -67,6 +79,8 @@ namespace HexRPG.World
         {
             int chunkX = (int)Math.Floor((double)coordinates.X / Globals.ChunkSize);
             int chunkY = (int)Math.Floor((double)coordinates.Y / Globals.ChunkSize);
+
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -87,6 +101,11 @@ namespace HexRPG.World
         /// <param name="forceLoad"></param>
         /// <returns></returns>
         public Chunk GetChunk(Vector2 coordinates, bool forceLoad)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save()
         {
 
         }
