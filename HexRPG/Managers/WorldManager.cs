@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using HexRPG.World;
 
 // TODO - Fast way to do tile lookups without needing cos/sin to avoid lag
 
@@ -15,30 +16,41 @@ namespace HexRPG.Managers
     {
         public static World.World World { get; set; }
 
-        public static void Initialize()
+        public static void Initialize(World.World world)
         {
-            CreateWord("Test-1");
+            World = world;
         }
 
-        public static void UpdateActiveChunks(Rectangle area)
+        public static void Initialize()
         {
-            World.ActiveChunks = area;
+
+            World = new World.World("Test", new Random().Next(100000000));
         }
 
         public static void UpdateChunkRange(GameTime gameTime, Rectangle area)
         {
-            for (int x = World.ActiveChunks.X; x < World.ActiveChunks.X + World.ActiveChunks.Width; x++)
+            int yi = 0;
+            for (int y = area.Y - area.Width; y < area.Y + area.Width; y++)
             {
-                for (int y = World.ActiveChunks.Y; y < World.ActiveChunks.Y + World.ActiveChunks.Height; y++)
+                int xi = 0;
+                for (int x = area.X - area.Height; x < area.X + area.Height; x++)
                 {
 
+                    xi += 1;
                 }
+                yi += 1;
             }
         }
 
         public static void DrawChunkRange(GameTime gameTime, Rectangle area)
         {
+            for (int x = area.X - area.Width; x < area.X + area.Width; x++)
+            {
+                for (int y = area.Y - area.Height; y < area.Y + area.Height; y++)
+                {
 
+                }
+            }
         }
 
         public static void CreateWord(string name)
@@ -48,12 +60,12 @@ namespace HexRPG.Managers
 
         public static void Save()
         {
-
+            World.Save();
         }
 
         public static World.World Load()
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         public static Rectangle GetAreaAroundFocus(IFocusObject focus)

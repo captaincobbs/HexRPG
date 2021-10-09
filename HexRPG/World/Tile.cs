@@ -2,6 +2,7 @@
 using HexRPG.Utilities;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using static HexRPG.World.Biome;
 
 namespace HexRPG.World
 {
@@ -14,8 +15,11 @@ namespace HexRPG.World
 
         public Vector2 ChunkCoordinates { get; set; }
 
-        public List<IEntity> Entities { get; set; } = new List<IEntity>();
+        public BiomeType Biome { get; set; }
 
-        public Biome Biome { get; set; }
+        public Tile()
+        {
+
+        }
     }
 }
