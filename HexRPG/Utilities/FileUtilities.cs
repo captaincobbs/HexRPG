@@ -3,6 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace HexRPG.Utilities
 {
@@ -17,6 +18,17 @@ namespace HexRPG.Utilities
         /// Tracks the last location of any loaded file.
         /// </summary>
         private static string previousLoadDirectory = null;
+
+        private static string logDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Diagnostics");
+
+        public static void CreateFolders()
+        {
+            if (!Directory.Exists(logDirectory))
+            {
+                Directory.CreateDirectory(logDirectory);
+                LogUtilities.Log($"Created new folder at {logDirectory}", "System");
+            }
+        }
 
         /// <summary>
         /// Returns the <see cref="FileStream"/> associated with the provided file. Displays an
@@ -289,24 +301,27 @@ namespace HexRPG.Utilities
         }
 
         /// <summary>
-        /// Prompts the user to select a file and append to that file. Returns the file path on
-        /// success, null otherwise.
+        /// Saves logs to <see cref="Directory.GetCurrentDirectory()"/>/Logs, 
         /// </summary>
         /// <param name="logs">The logs to be written to file.</param>
         /// <param name="logPath">Overrides the location to log to, if provided.</param>
         public static void SaveLog(string logs, string logPath = null)
         {
             string path = "";
+            
+            RemoveFilesIfAtCap(10, logDirectory, ".txt");
+            
 
             try
             {
-                path = logPath ?? Path.Combine(Directory.GetCurrentDirectory(), "logs.txt");
+                string filename = $"Log {DateTime.Now:M-d-yyyy HH-mm-ss-fff}.txt";
+                path = logPath ?? Path.Combine(logDirectory, filename);
+
                 File.AppendAllText(path, logs);
             }
             catch (Exception ex)
             {
-                string message = $"The logs could not be saved at \"{path}\"";
-                LogUtilities.Log(ex, message);
+                Console.WriteLine($"Could not save logs: {ex.Message}");
             }
         }
 
@@ -387,6 +402,35 @@ namespace HexRPG.Utilities
             }
 
             return default;
+        }
+
+        /// <summary>
+        /// Deletes the oldest files of a specified type in a specified file path
+        /// </summary>
+        /// <param name="cap">Maximum number of files allowed in filepath</param>
+        /// <param name="path">Filepath to enforce</param>
+        /// <param name="type">Filetype to filter for</param>
+        public static void RemoveFilesIfAtCap(int cap, string path, string type = "")
+        {
+
+            try
+            {
+                var filesToBeDeleted = Directory.EnumerateFiles(path)
+                    .Where(name => name.EndsWith(type))
+                    .Select(i => new FileInfo(i))
+                    .OrderByDescending(i => i.CreationTime)
+                    .Skip(cap - 1 > 0 ? cap - 1 : 0);
+
+                foreach (var file in filesToBeDeleted)
+                {
+                    file.Delete();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                LogUtilities.Log(ex);
+            }
         }
     }
 }

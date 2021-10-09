@@ -172,6 +172,11 @@ namespace HexRPG.Entity
             /// <see cref="InputAction"/> for toggling visibility of debug overlay
             /// </summary>
             DebugToggle,
+
+            /// <summary>
+            /// <see cref="InputAction"/> for toggling visibility of tile grid
+            /// </summary>
+            GridToggle,
         }
         /// <summary>
         /// General input of all mice controls simplified into one format
@@ -1010,6 +1015,10 @@ namespace HexRPG.Entity
             // DebugToggle
             Mappings[(int)InputAction.DebugToggle] = new ActionMapping();
             Mappings[(int)InputAction.DebugToggle].keyboardKeys.Add(Keys.F1);
+
+            // Grid
+            Mappings[(int)InputAction.GridToggle] = new ActionMapping();
+            Mappings[(int)InputAction.GridToggle].keyboardKeys.Add(Keys.F2);
         }
 
 
@@ -1214,6 +1223,11 @@ namespace HexRPG.Entity
             if (IsActionTriggered(InputAction.DebugToggle))
             {
                 MainGame.DebugToggle();
+            }
+
+            if (IsActionTriggered(InputAction.GridToggle))
+            {
+                MainGame.GridToggle();
             }
         }
         #endregion Functions

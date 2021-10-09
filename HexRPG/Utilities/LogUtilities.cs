@@ -17,9 +17,9 @@ namespace HexRPG.Utilities
         /// Includes a date-prefixed message in the log
         /// </summary>
         /// <param name="message">The message to be logged and dated</param>
-        public static void Log(string message)
+        public static void Log(string message, string type = "Message")
         {
-            log.Add(PrepareMessage(message));
+            log.Add(PrepareMessage(message, type));
 
             if (log.Count == 100)
             {
@@ -34,7 +34,7 @@ namespace HexRPG.Utilities
         /// <param name="startMessage">Special message to prefix the exception</param>
         public static void Log(Exception ex, string startMessage = null)
         {
-            string message = $"{startMessage} " ?? ""
+            string message = "Error:" + $"{startMessage} " ?? ""
                 + $"Log caught exception: {ex.Message},"
                 + $"with inner exception: {ex.InnerException?.Message ?? "null"},"
                 + $"with stack trace: {ex.StackTrace}";
@@ -67,9 +67,7 @@ namespace HexRPG.Utilities
 
             // Append all strings and flush.
             string logAsString = "";
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
             log.ForEach((str) => logAsString += str);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             try
             {
@@ -87,9 +85,9 @@ namespace HexRPG.Utilities
         /// Returns a date-prefixed message (local timezone).
         /// </summary>
         /// <param name="message">The string to be logged.</param>
-        private static string PrepareMessage(string message)
+        private static string PrepareMessage(string message, string type)
         {
-            return $"date: {DateTime.Now}, message: {message}" + Environment.NewLine + Environment.NewLine;
+            return $"{DateTime.Now:M-dd-yyyy hh:mm:ss.fff}, {type} - {message}" + Environment.NewLine;
         }
     }
 }

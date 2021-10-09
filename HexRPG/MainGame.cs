@@ -30,7 +30,6 @@ namespace HexRPG
         public static GameWindow GameWindow;
 
         SpriteBatch SpriteBatch;
-        MapManager MapManager;
 
         // Art
         /// <summary>
@@ -70,6 +69,7 @@ namespace HexRPG
             HardwareUtilities.Initialize();
             DebugOverlay.Initialize();
             CameraManager.Initialize(new EntityFocus(Player), GraphicsDevice.Viewport);
+            WorldManager.Initialize();
         }
 
         /// <summary>
@@ -99,11 +99,13 @@ namespace HexRPG
 
             // Secondary Updates
             Player.Update();
+            EntityManager.Update();
             CameraManager.Update();
 
             // Main Updates
             InputManager.Update(IsActive, Exit);
             DebugOverlay.Update(gameTime);
+            WorldManager.UpdateChunkRange(gameTime, WorldManager.GetAreaAroundFocus(CameraManager.CameraFocus));
 
             base.Update(gameTime);
         }
@@ -117,9 +119,15 @@ namespace HexRPG
             // Draw Background
             GraphicsDevice.Clear(Globals.BackgroundColor);
 
+            // Draw Tiles
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, null);
+            WorldManager.DrawChunkRange(gameTime, WorldManager.GetAreaAroundFocus(CameraManager.CameraFocus));
+            SpriteBatch.End();
+
             // Draw Game Objects
             SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, CameraManager.Camera);
             Player.Draw(SpriteBatch);
+            EntityManager.Draw(gameTime, SpriteBatch);
             SpriteBatch.End();
 
             // Draw Overlay
@@ -147,11 +155,19 @@ namespace HexRPG
         }
 
         /// <summary>
-        /// Called on <see cref="InputManager.ActionMapping"/> <see cref="InputManager.InputAction.DebugToggle"/>, toggles visibility of the overlay
+        /// Called on <see cref="InputManager.ActionMapping"/> <see cref="InputManager.InputAction.DebugToggle"/>, toggles visibility of the diagnostics overlay
         /// </summary>
         public static void DebugToggle()
         {
-            DebugOverlay.IsVisible = !DebugOverlay.IsVisible;
+            DebugOverlay.IsDiagnosticsVisible = !DebugOverlay.IsDiagnosticsVisible;
+        }
+
+        /// <summary>
+        /// Called on <see cref="InputManager.ActionMapping"/> <see cref="InputManager.InputAction.GridToggle"/>, toggles visibility of the tile grid overlay
+        /// </summary>
+        public static void GridToggle()
+        {
+            DebugOverlay.IsGridVisible = !DebugOverlay.IsGridVisible;
         }
 
         /// <summary>

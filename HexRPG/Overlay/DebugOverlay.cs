@@ -10,7 +10,12 @@ namespace HexRPG.Overlay
         /// <summary>
         /// Whether the debug overlay is allowed to be rendered or not, default false
         /// </summary>
-        public static bool IsVisible { get; set; } = false;
+        public static bool IsDiagnosticsVisible { get; set; } = false;
+
+        /// <summary>
+        /// Whether the grid overlay is visible
+        /// </summary>
+        public static bool IsGridVisible { get; set; } = false;
 
         // All debug overlay items
         private static List<IDebugOverlayItem> DebugOverlayItems;
@@ -23,20 +28,21 @@ namespace HexRPG.Overlay
             DebugOverlayItems = new List<IDebugOverlayItem>()
             {
                 // Top Left
-                new FPS() { Offset = new Vector2(4, 0)},
-                new LastUsedInput() {Offset = new Vector2(4, 12)},
+                new FPSItem() { Offset = new Vector2(4, 0)},
+                new LastUsedInputItem() {Offset = new Vector2(4, 12)},
 
                 // Top Right
-                new Coordinate() {Offset = new Vector2(-4, 0), horizontalAlignment = HorizontalAlignment.Right},
-                new CameraCoordinates() {Offset = new Vector2(-4, 12), horizontalAlignment = HorizontalAlignment.Right},
-                new Zoom() {Offset = new Vector2(-4, 24), horizontalAlignment = HorizontalAlignment.Right },
+                new CoordinateItem() {Offset = new Vector2(-4, 0), horizontalAlignment = HorizontalAlignment.Right},
+                new CameraCoordinatesItem() {Offset = new Vector2(-4, 12), horizontalAlignment = HorizontalAlignment.Right},
+                new ZoomItem() {Offset = new Vector2(-4, 24), horizontalAlignment = HorizontalAlignment.Right },
 
                 // Bottom Left
-                new ProcessorArchitecture() {Offset = new Vector2(4, -14), verticalAlignment = VerticalAlignment.Bottom},
-                new GraphicsDevice() {Offset = new Vector2(4, -2), verticalAlignment = VerticalAlignment.Bottom},
+                new ProcessorArchitectureItem() {Offset = new Vector2(4, -14), verticalAlignment = VerticalAlignment.Bottom},
+                new GraphicsDeviceItem() {Offset = new Vector2(4, -2), verticalAlignment = VerticalAlignment.Bottom},
 
                 // Bottom Right
-                new AssemblyRuntime() {Offset = new Vector2(-4, -2), horizontalAlignment = HorizontalAlignment.Right, verticalAlignment = VerticalAlignment.Bottom},
+                new MonoGameItem() {Offset = new Vector2(-4, -14), horizontalAlignment = HorizontalAlignment.Right, verticalAlignment = VerticalAlignment.Bottom},
+                new AssemblyRuntimeItem() {Offset = new Vector2(-4, -2), horizontalAlignment = HorizontalAlignment.Right, verticalAlignment = VerticalAlignment.Bottom},
             };
             RecalculatePositions();
         }
@@ -58,7 +64,7 @@ namespace HexRPG.Overlay
         /// <param name="gameTime">Most recent time state of <see cref="MainGame"/></param>
         public static void Update(GameTime gameTime)
         {
-            if (IsVisible)
+            if (IsDiagnosticsVisible)
             {
                 foreach (IDebugOverlayItem item in DebugOverlayItems)
                 {
@@ -73,7 +79,7 @@ namespace HexRPG.Overlay
         /// <param name="spriteBatch">Most recent <see cref="SpriteBatch"/></param>
         public static void Draw(SpriteBatch spriteBatch)
         {
-            if (IsVisible)
+            if (IsDiagnosticsVisible)
             {
                 foreach (IDebugOverlayItem item in DebugOverlayItems)
                 {
@@ -82,6 +88,10 @@ namespace HexRPG.Overlay
                 RecalculatePositions();
             }
 
+            if (IsGridVisible)
+            {
+
+            }
         }
     }
 }

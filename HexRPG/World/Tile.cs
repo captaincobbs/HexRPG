@@ -1,7 +1,8 @@
-﻿using HexRPG.Utilities;
-using System;
+﻿using HexRPG.Dynamic;
+using HexRPG.Utilities;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Drawing;
+using static HexRPG.World.Biome;
 
 namespace HexRPG.World
 {
@@ -10,33 +11,19 @@ namespace HexRPG.World
     /// </summary>
     public class Tile
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        private PointF points;
+        public Vector2 Coordinates { get; set; }
 
-        private float side;
+        public Vector2 ChunkCoordinates { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private float h;
+        public BiomeType Biome { get; set; }
+        public Element Element { get; set; } = 0;
+        public int Fertility { get; set; } = 0;
+        public int Richness { get; set; } = 0;
+        public int Danger { get; set; } = 0;
 
-        private float r;
+        public Tile()
+        {
 
-        private HexOrientation orientation;
-
-        private float x;
-
-        private float y;
-    }
-
-    /// <summary>
-    /// Determines whether the bottom of the hexagon is a point, or the bottom of the hexagon is flat
-    /// </summary>
-    public enum HexOrientation
-    {
-        Flat = 0,
-        Pointed = 1,
+        }
     }
 }

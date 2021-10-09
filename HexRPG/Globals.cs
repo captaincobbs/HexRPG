@@ -11,31 +11,7 @@ namespace HexRPG
     /// </summary>
     public static class Globals
     {
-        /// <summary>
-        /// Pixel size of a tile on the map, tiles wider or taller than this will be placed as normal.
-        /// </summary>
-        public const int TileSize = 32;
-
-        /// <summary>
-        /// Inertia rate of the camera when scrolling
-        /// </summary>
-        public const float CameraScrollInertia = 0.04f;
-
-        /// <summary>
-        /// Inertia rate of the camera when zooming
-        /// </summary>
-        public const float CameraZoomInertia = 0.15f;
-
-        /// <summary>
-        /// Inertia speed of the player
-        /// </summary>
-        public const float MovementInertiaFactor = 0.12f;
-
-        /// <summary>
-        /// Length of a chunk in tiles
-        /// </summary>
-        public const int ChunkSize = 10;
-
+        #region Appearance
         /// <summary>
         /// Color of the game background when no content blocks it
         /// </summary>
@@ -50,6 +26,28 @@ namespace HexRPG
         /// Index of <see cref="SpriteFont"/> in <see cref="FontLibrary"/> to be used for debug text
         /// </summary>
         public const int ForegroundFont = 0;
+
+        /// <summary>
+        /// Color of the debug overlay grid
+        /// </summary>
+        public static readonly Color GridColor = Color.Red;
+        #endregion
+
+        #region Controls
+        /// <summary>
+        /// Inertia rate of the camera when scrolling
+        /// </summary>
+        public const float CameraScrollInertia = 0.07f;
+
+        /// <summary>
+        /// Inertia rate of the camera when zooming
+        /// </summary>
+        public const float CameraZoomInertia = 0.15f;
+
+        /// <summary>
+        /// Inertia speed of the player
+        /// </summary>
+        public const float MovementInertiaFactor = 0.12f;
 
         /// <summary>
         /// Determines the sensitivity of horizontal and vertical scrolling mappings, smaller numbers means more sensitivity.
@@ -69,11 +67,31 @@ namespace HexRPG
         /// <summary>
         /// Determines the amount of "zoom" applied to the camera per scroll action
         /// </summary>
-        public const float ZoomThreshold = 0.75f;
+        public const float ZoomThreshold = 0.5f;
+        #endregion
 
+        #region System
         /// <summary>
         /// Determines the format in which user files will be exported as
         /// </summary>
         public readonly static SaveType SaveType = SaveType.JSON;
+        #endregion
+
+        #region World
+        /// <summary>
+        /// Pixel size of a tile on the map, tiles wider or taller than this will be placed as normal.
+        /// </summary>
+        public const int TileSize = 32;
+
+        /// <summary>
+        /// Length of a chunk in tiles
+        /// </summary>
+        public const int ChunkSize = 5;
+
+        /// <summary>
+        /// How many chunks are rendered in any direction near the player
+        /// </summary>
+        public const int ChunkLimit = 5;
+        #endregion
     }
 }
